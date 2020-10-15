@@ -1,3 +1,6 @@
+# local folders
+data/
+
 # R IGNORE LIST
 # History files
 .Rhistory
