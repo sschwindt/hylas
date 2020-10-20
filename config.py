@@ -1,32 +1,82 @@
-import laspy
-from geo_utils import *
-import os
+try:
+    import os
+    import logging
+    import re
+    import shutil
+except ImportError:
+    print("ERROR: Cannot import basic Python libraries.")
+
+try:
+    import laspy
+except ImportError:
+    print("ERROR: Cannot import LasPy.")
+
+try:
+    import pandas as pd
+    import geopandas
+except ImportError:
+    print("ERROR: Cannot import pandas and geopandas.")
+
+try:
+    import numpy as np
+except ImportError:
+    print("ERROR: Cannot import numpy.")
+
+try:
+    import shapely
+except ImportError:
+    print("ERROR: Cannot import shapely.")
+
+try:
+    from gdal import osr
+except ImportError:
+    print("ERROR: Cannot import gdal.")
+
+try:
+    from geo_utils import *
+except ImportError:
+    print("ERROR: Cannot import geo_utils.")
 
 # Global variables
+cache_folder = os.path.abspath("") + "/__cache__/"
+nan_value = 0.0
+
 pattr = {
-        "a": 'scan_angle',
-        "c": 'classification_flags',
-        "e": 'flightline_edge',
-        "g": 'gps_time',
-        "i": 'intensity',
-        "n": 'number_of_returns',
-        "r": 'return_number',
-        "s": 'scan_direction',
-        "u": 'user_data',
-        "w": 'wave_form'
+        "a": "scan_angle",
+        "b": "blue",
+        "c": "classification_flags",
+        "C": "classification",
+        "e": "edge_flight_line",
+        "g": "green",
+        "G": "gps_time",
+        "i": "intensity",
+        "n": "nir",
+        "N": "num_returns",
+        "r": "red",
+        "R": "return_num",
+        "s": "scan_dir_flag",
+        "u": "user_data",
+        "w": "wave_packet_desc_index",
+        "W": "waveform_packet_size"
         }
 
 
 wattr = {
-        "a": 'ScanAngle',
-        "c": 'Class',
-        "e": 'FlightEdge',
-        "g": 'GPStime',
-        "i": 'Intensity',
-        "n": 'NumberRet',
-        "r": 'Return',
-        "s": 'ScanDir',
-        "u": 'UserData',
-        "w": 'Waveform'
+        "a": "ScanAngle",
+        "b": "Blue",
+        "c": "ClassFlag",
+        "C": "Class",
+        "e": "FlightEdge",
+        "g": "Green",
+        "G": "GPStime",
+        "i": "Intensity",
+        "n": "NIR",
+        "N": "NumberRet",
+        "r": "Red",
+        "R": "ReturnNumber",
+        "s": "ScanDir",
+        "u": "UserData",
+        "w": "WaveformDesc",
+        "W": "WaveSize"
         }
 
