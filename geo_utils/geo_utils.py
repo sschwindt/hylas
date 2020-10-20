@@ -130,7 +130,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     :param pixel_size: INT of pixel size (default: 10)
     :param no_data_value: Numeric (INT/FLOAT) for no-data pixels (default: -9999)
     :param rdtype: gdal.GDALDataType raster data type - default=gdal.GDT_Float32 (32 bit floating point)
-    :kwarg field_name: name of the shapefile's field with values to burn to the raster
+    :kwargs field_name: name of the shapefile's field with values to burn to the raster
     :return: produces the shapefile defined with in_shp_file_name
     """
 
