@@ -1,5 +1,5 @@
 import sys, os
 sys.path.append(r'' + os.path.abspath(''))
-__all__ = ['LasPoint', 'lashy']
+__all__ = ['LasPoint', 'hylas.py']
 
-from . import lashy
+from . import hylas
