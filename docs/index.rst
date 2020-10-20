@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-lidar-analysis
+HYLAS
 ==============
 Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this README file to setup the working environment.
 

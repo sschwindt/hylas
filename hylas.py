@@ -13,28 +13,6 @@ def lookup_epsg(file_name):
     webbrowser.open(google_qry + search_string)
 
 
-
-def print_dimensions(las_file):
-    """
-    Print dimensions of a las file and return it as xml formatted-string
-    :param las_file: `laspy.file.File`
-    :return: `str`
-    """
-    for dim in las_file.point_format:
-        print(dim.name)
-    return las_file.point_format.xml()
-
-
-def print_header(las_file):
-    """
-    Print header specs of a las file
-    :param las_file: laspy.file.File object
-    :return: None
-    """
-    for spec in las_file.header.header_format:
-        print(spec.name)
-
-
 @log_actions
 @cache
 def process_file(source_file_name, epsg, **opts):

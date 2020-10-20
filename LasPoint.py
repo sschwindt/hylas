@@ -63,7 +63,10 @@ class LasPoint:
         print("Point data formats in file:")
         for f in self.las_file.point_format:
             print("   -- %s" % f.name)
-        print("Point data formats in file:")
+        print("File header info:")
+        headers = [str(spec.name) for spec in self.las_file.header.header_format]
+        print("   -- " + ", ".join(headers))
+
         return {"x_raw": self.las_file.X, "y_raw": self.las_file.Y, "x_scaled": self.las_file.x, "y_scaled": las_file.y,
                 "scale": self.las_file.header.scale[0], "offset": self.las_file.header.offset[0]}
 
