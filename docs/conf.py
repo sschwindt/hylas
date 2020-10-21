@@ -21,10 +21,9 @@ def is_development_build():
     return True
 
 
-if is_development_build():
-    sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../..'))
 sys.setrecursionlimit(1500)
-#sys.path.append(os.path.abspath('./demo/'))
+sys.path.append(os.path.abspath('./geu_utils/'))
 
 import sphinx_rtd_theme
 from sphinx.locale import _
