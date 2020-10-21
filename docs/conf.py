@@ -22,8 +22,9 @@ def is_development_build():
 
 
 if is_development_build():
-    sys.path.insert(0, os.path.abspath('..'))
-sys.path.append(os.path.abspath('./demo/'))
+    sys.path.insert(0, os.path.abspath('../..'))
+sys.setrecursionlimit(1500)
+#sys.path.append(os.path.abspath('./demo/'))
 
 import sphinx_rtd_theme
 from sphinx.locale import _
@@ -48,7 +49,7 @@ extensions = [
 templates_path = ['_templates']
 source_suffix = '.rst'
 exclude_patterns = []
-locale_dirs = ['locale/']
+locale_dirs = ['locale/', 'docs/']
 gettext_compact = False
 
 master_doc = 'index'

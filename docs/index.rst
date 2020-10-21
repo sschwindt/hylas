@@ -26,14 +26,14 @@ Get ready with the OSGeoLive VM
 
 Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>`_ as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. Afterwards, make sure to:
 
-* `install \ *Guest Additions\* <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
+* `install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
 * `enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*OSGeoLive* image)
 
 The other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
 .. note:: As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
-          - On *Linux* install `*Debian GIS* <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `*Virtual Machine* <https://hydro-informatics.github.io/vm.>`_
-          - On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
+          * On *Linux* install `Debian GIS <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `Virtual Machine <https://hydro-informatics.github.io/vm.>`_
+          * On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
 
 The following instructions refer to the usage of the *OSGeoLive* VM.
 
@@ -42,7 +42,7 @@ Prepare the system
 
 Open *Terminal*  and update the system:
 
-.. code:: $ sudo apt update &&    $ sudo apt full-upgrade -y
+.. code:: sudo apt update &&    $ sudo apt full-upgrade -y
 
 
 Update Python references
