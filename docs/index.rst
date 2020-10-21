@@ -7,39 +7,37 @@ hylas
 =====
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Main file
+    :maxdepth: 3
+    :caption: Main file
 
    hylas
 
 .. module:: hylas
-   :platform: Unix, Windows
-   :synopsis: Process las-files and extract predictor layers for random forest applications.
+    :platform: Unix, Windows
+    :synopsis: Process las-files and extract predictor layers for random forest applications.
+
 .. moduleauthor:: Sebastian Schwindt <sebastian.schwindtATiws.uni-stuttgart.de>
 
-Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this README file to setup the working environment.
+Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this workflow to setup the working environment.
 
-==========
-USER GUIDE
-==========
 
 Get ready with the OSGeoLive VM
 ================================
 
-Install *OSGeoLive* `download *ISO* image <http://live.osgeo.org/en/download.html>`_ as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. Afterwards, make sure to:
+Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>`_ as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. Afterwards, make sure to:
 
-* `install *Guest Additions* <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
+* `install \ *Guest Additions\* <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
 * `enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*OSGeoLive* image)
 
 The other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
-As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
-   - On *Linux* install `*Debian GIS* <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `*Virtual Machine* <https://hydro-informatics.github.io/vm.>`_
-   - On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
+.. note:: As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
+          - On *Linux* install `*Debian GIS* <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `*Virtual Machine* <https://hydro-informatics.github.io/vm.>`_
+          - On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
 
 The following instructions refer to the usage of the *OSGeoLive* VM.
 
-Prepare system
+Prepare the system
 ---------------------------------------
 
 Open *Terminal*  and update the system:
@@ -239,7 +237,7 @@ In *Terminal* ``cd`` to the ``/ROOT/docs`` directory and type:
 make html
 sphinx-build -b rinoh source _build/rinoh
 
-
+<p>Documentation written by {{ author }} (last updated on {{ date }}.</p>
 
 Indices and tables
 ==================

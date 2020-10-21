@@ -3,6 +3,7 @@
 import sys
 import os
 import re
+import datetime
 
 # If we are building locally, or the build on Read the Docs looks like a PR
 # build, prefer to use the version of the theme in this repo, not the installed
@@ -64,7 +65,10 @@ html_theme_options = {
     'logo_only': True,
     'navigation_depth': 5,
 }
-html_context = {}
+html_context = {
+    'author': 'Sebastian Schwindt',
+    'date': datetime.date.today().strftime('%Y-%m-%d')
+}
 
 if not 'READTHEDOCS' in os.environ:
     html_static_path = ['_static/']
