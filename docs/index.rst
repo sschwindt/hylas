@@ -7,6 +7,14 @@ HYLAS
 =====
 Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this README file to setup the working environment.
 
+:mod:`hylas` -- las-file processing for hydraulics
+==================================================
+
+.. module:: hylas
+   :platform: Unix, Windows
+   :synopsis: Process las-files and extract predictor layers for random forest applications.
+.. moduleauthor:: Sebastian Schwindt <sebastian.schwindtATiws.uni-stuttgart.de>
+
 
 USER GUIDE
 ***********
