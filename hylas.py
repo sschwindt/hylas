@@ -17,20 +17,24 @@ def lookup_epsg(file_name):
 @cache
 def process_file(source_file_name, epsg, **opts):
     r"""Load a las-file and convert it to another geospatial file format (**opts)
-    :param source_file_name: (`str`) Full directory of the source file to use with methods
+
+    Args:
+        source_file_name (`str`): Full directory of the source file to use with methods
                              * if method="las2*" > provide a las-file name
                              * if method="shp2*" > provide a shapefile name
-    :param epsg: Authority code to use (try lashy.lookup_epsg(las_file_name) to look up the epsg online).
+        epsg (int): Authority code to use (try lashy.lookup_epsg(las_file_name) to look up the epsg online).
+        **opts: optional keyword arguments
 
-    :keyword arguments **opts:
-        extract_attributes (`str`): Attributes to extract from the las-file available in pattr (config.py)
+    Keyword Args:
+        extract_attributes (str): Attributes to extract from the las-file available in pattr (config.py)
         methods(`list` [`str`]): Enabled list strings are las2shp, las2tif, shp2tif
-        tar_shapefile_name (`str`): Name of the point shapefile to produce with las2*
-        tar_tif_prefix (`str`): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
-        create_dem (`bool`): Default=False - set to True for creating a digital elevation model (DEM)
-        pixel_size (`int`): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
+        tar_shapefile_name (str): Name of the point shapefile to produce with las2*
+        tar_tif_prefix (str): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
+        create_dem (bool): Default=False - set to True for creating a digital elevation model (DEM)
+        pixel_size (int): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
 
-    :return:
+    Returns:
+        bool: True if successful, False otherwise
     """
     epsg = 25832
     # las_file_name = os.path.abspath("") + "/data/Inn_WWARosenheim_UTM32N_DHHN16_Klasse0_748000_5340000.las"

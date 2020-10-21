@@ -4,16 +4,17 @@ from helpers import *
 class LasPoint:
     """Load and convert las-files
 
-    Arguments:
-        las_file_name: `str`
-            Name a las file name
-        epsg: `int`
-            Authority Code - Geodetic Parameter Dataset ID (default = 3857)
-        use_attributes: `str`
-            Attributes (properties) to use from the las-file available in pattr (config.py)
+    Args:
+        las_file_name (str): Name of a las file name
+        epsg (`int`): Authority Code - Geodetic Parameter Dataset ID (default = 3857)
+        use_attributes (`str`): Attributes (properties) to use from the las-file available in pattr (config.py)
 
     Attributes:
-        las_file, las_attributes, epsg, gdf, srs
+        las_file (laspy.file.File): A laspy file object
+        las_attributes (str): Defined with ``use_attributes``
+        epsg (int): Authority code
+        gdf (geopandas.GeoDataFrame): geopandas data frame containing all points of the las file with the properties (columns) defined by ``use_attributes``
+        srs (osr.SpatialReference): The geo-spatial reference imported from ``epsg``
     """
 
     def __init__(self, las_file_name, epsg=3857, use_attributes="aciw"):
@@ -40,10 +41,11 @@ class LasPoint:
 
     def export2shp(self, **kwargs):
         r"""Convert a las-file to shapefile
-        :Keyword Arguments:
-            * *shapefile_name* (``str``): Optional shapefile name (must end on .shp).
-            Default=las_file_name.shp
-        :return: shapefile name (``str``)
+        Keyword Args:
+            shapefile_name (:obj:`str`, optional): Optional shapefile name (must end on .shp).
+                                        default='/this/dir/las_file_name.shp'
+        Returns:
+            shapefile name (``str``)
         """
         if kwargs.get("shapefile_name"):
             shapefile_name = kwargs.get("shapefile_name")
@@ -55,11 +57,8 @@ class LasPoint:
         logging.info("   -- Done.")
 
     def get_file_info(self):
-        """
-        Get information of a las file in dictionary format
-        :param las_file: laspy.file.File object
-        :return: `dict`
-        """
+        r""" Prints las file information to console."""
+
         print("Point data formats in file:")
         for f in self.las_file.point_format:
             print("   -- %s" % f.name)
@@ -71,10 +70,7 @@ class LasPoint:
                 "scale": self.las_file.header.scale[0], "offset": self.las_file.header.offset[0]}
 
     def _build_data_frame(self):
-        """
-        build geopandas GeoDataFrame - auto-runs self._parse_attributes
-        :return:
-        """
+        r""" Builds the geopandas GeoDataFrame - auto-runs self._parse_attributes."""
         point_dict = self._parse_attributes()
         # for attr in self.pts_description:
         #     if not re.search("[x-z]", attr):
@@ -85,9 +81,8 @@ class LasPoint:
         logging.info("   -- Done.")
 
     def _parse_attributes(self):
-        """
-        Parse attributes and append entries to point list
-        """
+        r"""Parses attributes and append entries to point list."""
+
         logging.info(" * Extracting transformed point coordinates ...")
         point_dict = {"geometry": geopandas.points_from_xy(self.las_file.x, self.las_file.y, self.las_file.z)}
 

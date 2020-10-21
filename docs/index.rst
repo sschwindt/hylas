@@ -135,7 +135,7 @@ Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Setti
 ``hylas``
 ---------
 
-.. automodule:: ../hylas
+.. automodule:: hylas
    :members:
    :private-members:
    :special-members:
@@ -143,7 +143,7 @@ Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Setti
 ``hylas2``
 ---------
 
-.. automodule:: .hylas
+.. automodule:: hylas.process_file
    :members:
    :private-members:
    :special-members:
@@ -151,7 +151,7 @@ Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Setti
 ``hylas3``
 ---------
 
-.. automodule:: hylas.py
+.. automodule:: hylas.*
    :members:
    :private-members:
    :special-members:
@@ -159,8 +159,9 @@ Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Setti
 hylas config
 ---------------------------------------
 
-.. automodule:: config.py
+.. automodule:: config
    :members:
+
 
 hylas helpers functions
 ---------------------------------------
@@ -173,6 +174,8 @@ hylas LasPoint class
 
 .. autoclass:: LasPoint.LasPoint
    :members:
+   :private-members:
+   :special-members:
 
 hylas geo_utils master
 ---------------------------------------
@@ -219,6 +222,42 @@ Functions and classes are automatically parsed for `docstrings <https://www.pyth
 
 To modify this documentation file, edit ``ROOT/docs/index.rst`` (uses `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_ format).
 
+In the class or function docstrings use the following section headers:
+
+* ``Args (alias of Parameters)``
+* ``Arguments (alias of Parameters)``
+* ``Attention``
+* ``Attributes``
+* ``Caution``
+* ``Danger``
+* ``Error``
+* ``Example``
+* ``Examples``
+* ``Hint``
+* ``Important``
+* ``Keyword Args (alias of Keyword Arguments)``
+* ``Keyword Arguments``
+* ``Methods``
+* ``Note``
+* ``Notes``
+* ``Other Parameters``
+* ``Parameters``
+* ``Return (alias of Returns)``
+* ``Returns``
+* ``Raise (alias of Raises)``
+* ``Raises``
+* ``References``
+* ``See Also``
+* ``Tip``
+* ``Todo``
+* ``Warning``
+* ``Warnings (alias of Warning)``
+* ``Warn (alias of Warns)``
+* ``Warns``
+* ``Yield (alias of Yields)``
+* ``Yields``
+
+
 To set styles, configure or add extensions to the documentation use ``ROOT/.readthedocs.yml`` and ``ROOT/docs/conf.py``.
 
 For local builds of the documentation, the following packages are required:
@@ -240,7 +279,7 @@ To generate a local html version of the ``hylas`` documentation, ``cd`` into the
 
    make html
 
-
+Learn more about *Sphinx* documentation and the automatic generation of *Python* code docs through docstrings in the tutorial provided at `github.com/sschwindt/docs-with-sphinx <https://github.com/sschwindt/docs-with-sphinx>`_
 
 Indices and tables
 ==================
