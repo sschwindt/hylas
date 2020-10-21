@@ -57,6 +57,7 @@ Update Python references
 
    $ ls /usr/bin/python*
 
+
     /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.6  /usr/bin/python3.6m  /usr/bin/python3m
 
 
@@ -139,22 +140,39 @@ Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Setti
    :private-members:
    :special-members:
 
+``hylas2``
+---------
+
+.. automodule:: ../hylas.py
+   :members:
+   :private-members:
+   :special-members:
+
+``hylas3``
+---------
+
+.. automodule:: hylas.py
+   :members:
+   :private-members:
+   :special-members:
+
 hylas config
 ---------------------------------------
 
-.. automodule:: config
+.. automodule:: config.py
    :members:
 
 hylas helpers functions
 ---------------------------------------
 
-.. automodule:: helpers
+.. include:: helpers.py
    :members:
 
 hylas LasPoint class
 ---------------------------------------
 
-.. automodule:: LasPoint
+.. literalinclude:: LasPoint
+   :language: PYTHON
    :members:
 
 hylas geo_utils master
