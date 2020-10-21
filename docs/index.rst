@@ -3,8 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-HYLAS
-=====
+hylas (DOCs)
+===============
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
 Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this README file to setup the working environment.
 
 :mod:`hylas` -- las-file processing for hydraulics
@@ -76,6 +81,7 @@ Install PIP3 and Python libraries
 ---------------------------------------
 
 Then install: ``pip3``:
+
 .. code::
    $ sudo apt install python3-pip
 
@@ -83,7 +89,6 @@ Then use the *requirements* file from this repository and copy it to the project
 
 .. code::
    $ pip3 install -r requirements.txt
-
 
 Clean up obsolete update remainders:
 
@@ -118,12 +123,7 @@ Install *PyCharm* if not yet done (requires snap):
 Start *PyCharm* and create a new project from the ``lidar-analysis`` repository.
 Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable because we are working on a VM.
 
-Use hylas (DOCs)
-===============
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
 
    hylas
 
