@@ -53,6 +53,7 @@ Open *Terminal*  and update the system:
 
 Update Python references
 ---------------------------------------
+
 .. code::
    $ ls /usr/bin/python*
 

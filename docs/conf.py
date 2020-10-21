@@ -41,8 +41,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'sphinxcontrib.httpdomain',
-    'sphinx_rtd_theme',
+    'sphinx_rtd_theme'
 ]
 
 templates_path = ['_templates']
