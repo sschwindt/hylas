@@ -207,12 +207,24 @@ hylas geo_utils Dataset Conversion
    :members:
 
 
-DEVELOPER GUIDE
-***************
+DEVELOPERS (CONTRIBUTE)
+=======================
 
-Install *Sphinx* and *read-the-docs* (skip already installed packages):
+How to document hylas
+---------------------
 
-.. code::
+This package uses *Sphinx* `readthedocs <https://readthedocs.org/>`_ and the documentation regenerates automatically after pushing changes to the repositories ``main`` branch.
+
+Functions and classes are automatically parsed for `docstrings <https://www.python.org/dev/peps/pep-0257/>`_ and implemented in the documentation. ``hylas`` docs use `google style <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_ docstring formats - please familiarize with the style format and strictly apply in all commits.
+
+To modify this documentation file, edit ``ROOT/docs/index.rst`` (uses `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_ format).
+
+To set styles, configure or add extensions to the documentation use ``ROOT/.readthedocs.yml`` and ``ROOT/docs/conf.py``.
+
+For local builds of the documentation, the following packages are required:
+
+.. code:: console
+
    $ sudo apt-get install build-essential
    $ sudo apt-get install python-dev python-pip python-setuptools
    $ sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
@@ -222,55 +234,11 @@ Install *Sphinx* and *read-the-docs* (skip already installed packages):
    $ sudo apt-get install python3-dev
    $ sudo apt-get install redis-server
 
-Document the code
-==================
+To generate a local html version of the ``hylas`` documentation, ``cd`` into the  ``docs`` directory  and type:
 
-The hylas docs live in ``/docs/build/html``. So to read the packages contents, open ``/docs/build/html/index.html``.
+.. code:: console
 
-Setup docs directory
-====================
-
-Create a new ``docs`` directory and ``cd`` in the new directory:
-
-
-mkdir docs
-cd docs
-
-
-Start and setup *Sphinx*
-=========================
-
-In the new ``docs`` folder, get start a new *Sphinx* documentation with (follow the instructions during the project setup process):
-
-
-sphinx-quickstart
-
-
-Setup **``conf.py``**
----------------------------------
-
-After setting up the new *Sphinx* project, open (edit) ``/docs/source/conf.py``:
-
-* Uncomment/Add the following lines
-
-import os
-import sys
-sys.path.insert(0, os.path.abspath('../..'))
-sys.setrecursionlimit(1500)
-
-
-* Add the project root folder to the documentation source by modifying the relative directory in ``os.path.abspath('.')`` to ``os.path.abspath('../..')``. Note that this change is based on the assumption that the *Python* project will be located in ``/NewProject`` (corresponds to the root directory) and that the docs will live in ``/NewProject/docs``.
-
-
-Build the docs (*html*)
----------------------------------
-
-Regular push: The docs are available at  `https://hylas.readthedocs.io <https://hylas.readthedocs.io>`_
-
-First-time push: Login to `https://readthedocs.org <https://docs.readthedocs.io>`_ and build the project after pushing changes.
-
-In *Terminal* ``cd`` to the ``/ROOT/docs`` directory and type:
-make html
+   make html
 
 
 
