@@ -21,7 +21,7 @@ def is_development_build():
     return True
 
 
-sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('..'))
 sys.setrecursionlimit(1500)
 sys.path.append(os.path.abspath('./geu_utils/'))
 
