@@ -3,32 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-hylas (DOCs)
-===============
+hylas
+=====
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Main file
 
-Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this README file to setup the working environment.
-
-:mod:`hylas` -- las-file processing for hydraulics
-==================================================
+   hylas
 
 .. module:: hylas
    :platform: Unix, Windows
    :synopsis: Process las-files and extract predictor layers for random forest applications.
 .. moduleauthor:: Sebastian Schwindt <sebastian.schwindtATiws.uni-stuttgart.de>
 
+Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this README file to setup the working environment.
 
+==========
 USER GUIDE
-***********
+==========
 
 Get ready with the OSGeoLive VM
 ================================
-
-Get OSGeoLive
----------------------------------------
 
 Install *OSGeoLive* `download *ISO* image <http://live.osgeo.org/en/download.html>`_ as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. Afterwards, make sure to:
 
@@ -45,34 +41,31 @@ The following instructions refer to the usage of the *OSGeoLive* VM.
 
 Prepare system
 ---------------------------------------
+
 Open *Terminal*  and update the system:
 
-.. code::
-   $ sudo apt update &&    $ sudo apt full-upgrade -y
+.. code:: $ sudo apt update &&    $ sudo apt full-upgrade -y
 
 
 Update Python references
 ---------------------------------------
 
-.. code::
-   $ ls /usr/bin/python*
+.. code:: $ ls /usr/bin/python*
 
     /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.6  /usr/bin/python3.6m  /usr/bin/python3m
 
 
 Now set the ``python`` environment variable so that it points at *Python3*:
 
-.. code::
-   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
-   $ alias python=python3
+.. code:: $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
+          $ alias python=python3
 
 
 Additional libraries for geospatial analysis
 ---------------------------------------------
 Make sure that `*PyGeos* <https://pygeos.readthedocs.io>`_ and `*tkinter* <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
 
-.. code::
-   $ sudo apt-get install python3-tk
+.. code::  $ sudo apt-get install python3-tk
    $ sudo apt install tk8.6-dev
    $ sudo apt install libgeos-dev
 
@@ -200,7 +193,8 @@ Document the code
 
 The hylas docs live in ``/docs/build/html``. So to read the packages contents, open ``/docs/build/html/index.html``.
 
-### Setup docs directory
+Setup docs directory
+====================
 
 Create a new ``docs`` directory and ``cd`` in the new directory:
 
