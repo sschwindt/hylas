@@ -11,7 +11,7 @@ hylas
 .. toctree::
     :maxdepth: 4
     :caption: Main file
-
+   README
    hylas
 
 .. module:: hylas
@@ -143,7 +143,7 @@ Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Setti
 ``hylas2``
 ---------
 
-.. automodule:: ../hylas.py
+.. automodule:: .hylas
    :members:
    :private-members:
    :special-members:
@@ -171,8 +171,7 @@ hylas helpers functions
 hylas LasPoint class
 ---------------------------------------
 
-.. literalinclude:: LasPoint
-   :language: PYTHON
+.. autoclass:: LasPoint.LasPoint
    :members:
 
 hylas geo_utils master
@@ -183,6 +182,7 @@ hylas geo_utils master
 
 hylas geo_utils geoconfig
 ---------------------------------------
+
 .. automodule:: geo_utils.geoconfig
    :members:
 

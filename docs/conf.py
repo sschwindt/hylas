@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 sys.setrecursionlimit(1500)
 sys.path.append(os.path.abspath('./geu_utils/'))
 
+autodoc_moc_imports = ['hylas', 'geo_utils']
 import sphinx_rtd_theme
 from sphinx.locale import _
 
@@ -147,7 +148,7 @@ napoleon_include_special_with_doc = False
 napoleon_use_admonition_for_examples = False
 napoleon_use_admonition_for_notes = False
 napoleon_use_admonition_for_references = False
-napoleon_use_ivar = False
+napoleon_use_ivar = True
 napoleon_use_param = True
 napoleon_use_rtype = True
 napoleon_use_keyword = True
