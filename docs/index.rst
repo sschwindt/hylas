@@ -103,20 +103,33 @@ Clean up obsolete update remainders:
    $ sudo apt-get autoremove --purge
 
 
-Clone lidar-analysis repository
----------------------------------------
+Get ready with hylas (install)
+==============================
 
-In Clone the *lidar-analysis* repository:
+Clone hylas
+------------
+
+Open *Terminal*, create a project folder and ``cd`` to the project folder:
+
+.. code:: console
+   $ mkdir hylas-project
+   $ cd hylas-project
+
+Clone the *hylas* repository in the new folder:
 
 .. code:: console
 
    $ git clone https://github.com/sschwindt/lidar-analysis.git
 
-Note that this repository is private and you will need to send an inquiry to `Sebastian Schwindt <mailto:sebastian.schwindtATiws.uni-stuttgart.de?subject=GitHub%20Access%20to%lidar%repo>`_.
+.. note::
+   Cloning the repository creates a new sub-folder. So if you want to work directly in your home folder, skip the ``mkdir`` + ``cd`` commands.
 
 
 Get ready with *PyCharm*
----------------------------------------
+-------------------------
+
+.. admonition::
+   Any other Python IDE is also OK for working with hylas. Setting up PyCharm is explained here as just one option to work with hylas.
 
 Install *PyCharm* if not yet done (requires snap):
 
@@ -126,41 +139,41 @@ Install *PyCharm* if not yet done (requires snap):
    $ sudo snap install pycharm-community --classic
 
 
-Start *PyCharm* and create a new project from the ``lidar-analysis`` repository.
+Start *PyCharm* and create a new project from the ``hylas`` repository.
 Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable because we are working on a VM.
 
 Module functions, classes, and methods
 ======================================
 
 The main file: hylas.py
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 .. automodule:: hylas
    :members:
    :private-members:
 
 Basic parameters: config.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 .. automodule:: config
    :members:
    :private-members:
 
 Global functions: helpers.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 .. automodule:: helpers
    :members:
 
 The ``LasPoint`` class
-^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 .. autoclass:: LasPoint.LasPoint
    :members:
    :private-members:
 
 geo_utils
-^^^^^^^^^
+-----------------------
 
 .. automodule:: geo_utils.geo_utils
    :members:

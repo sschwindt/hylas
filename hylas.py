@@ -1,3 +1,4 @@
+import geo_utils
 from LasPoint import *
 import webbrowser
 
@@ -47,9 +48,9 @@ def process_file(source_file_name, epsg, **opts):
     las_inn.export2shp(shapefile_name=las_pts_shp)
 
     tar_dir = os.path.abspath("") + "/data/lasras.tif"
-    rasterize(in_shp_file_name=las_pts_shp, out_raster_file_name=tar_dir, pixel_size=5,
-              field_name=wattr["i"])
+    geo_utils.rasterize(in_shp_file_name=las_pts_shp, out_raster_file_name=tar_dir, pixel_size=5,
+                        field_name=wattr["i"])
 
 
-if __name__ == "__main__":
-    process_file()
+# if __name__ == "__main__":
+#     process_file()
