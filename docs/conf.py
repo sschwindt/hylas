@@ -65,7 +65,19 @@ html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
     'logo_only': True,
     'navigation_depth': 5,
+    'canonical_url': '',
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    'vcs_pageview_mode': 'view',
+    'style_nav_header_background': 'white',
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': False,
+    'includehidden': -1,
+    'titles_only': False
 }
+
 html_context = {
     'author': 'Sebastian Schwindt',
     'date': datetime.date.today().strftime('%Y-%m-%d')

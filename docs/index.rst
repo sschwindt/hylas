@@ -7,7 +7,7 @@ hylas
 =====
 
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 4
     :caption: Main file
 
    hylas
@@ -31,7 +31,13 @@ Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>
 
 The other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
-.. note:: As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
+
+
+.. default-role:: raw-html(raw)
+    :format: html
+
+.. note::
+   As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
           * On *Linux* install `Debian GIS <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `Virtual Machine <https://hydro-informatics.github.io/vm.>`_
           * On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
 
@@ -42,28 +48,32 @@ Prepare the system
 
 Open *Terminal*  and update the system:
 
-.. code:: sudo apt update &&    $ sudo apt full-upgrade -y
+.. code:: console
+    $ sudo apt update &&    $ sudo apt full-upgrade -y
 
 
 Update Python references
 ---------------------------------------
 
-.. code:: $ ls /usr/bin/python*
+.. code:: console
+   $ ls /usr/bin/python*
 
     /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.6  /usr/bin/python3.6m  /usr/bin/python3m
 
 
 Now set the ``python`` environment variable so that it points at *Python3*:
 
-.. code:: $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
-          $ alias python=python3
+.. code:: console
+   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
+   $ alias python=python3
 
 
 Additional libraries for geospatial analysis
 ---------------------------------------------
 Make sure that `*PyGeos* <https://pygeos.readthedocs.io>`_ and `*tkinter* <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
 
-.. code::  $ sudo apt-get install python3-tk
+.. code:: console
+   $ sudo apt-get install python3-tk
    $ sudo apt install tk8.6-dev
    $ sudo apt install libgeos-dev
 
@@ -74,17 +84,18 @@ Install PIP3 and Python libraries
 
 Then install: ``pip3``:
 
-.. code::
+.. code:: console
+
    $ sudo apt install python3-pip
 
 Then use the *requirements* file from this repository and copy it to the project folder. In *Terminal* type:
 
-.. code::
+.. code:: console
    $ pip3 install -r requirements.txt
 
 Clean up obsolete update remainders:
 
-.. code::
+.. code:: console
    $ sudo apt-get clean
    $ sudo apt-get autoclean
    $ sudo apt-get autoremove
@@ -96,7 +107,7 @@ Clone lidar-analysis repository
 
 In Clone the *lidar-analysis* repository:
 
-.. code::
+.. code:: console
    $ git clone https://github.com/sschwindt/lidar-analysis.git
 
 Note that this repository is private and you will need to send an inquiry to `Sebastian Schwindt <mailto:sebastian.schwindtATiws.uni-stuttgart.de?subject=GitHub%20Access%20to%lidar%repo>`_.
@@ -107,7 +118,7 @@ Get ready with *PyCharm*
 
 Install *PyCharm* if not yet done (requires snap):
 
-.. code::
+.. code:: console
    $ sudo apt install snapd
    $ sudo snap install pycharm-community --classic
 
@@ -124,6 +135,8 @@ hylas main
 ---------------------------------------
 .. automodule:: hylas
    :members:
+   :private-members:
+   :special-members:
 
 hylas config
 ---------------------------------------
@@ -226,7 +239,7 @@ sys.setrecursionlimit(1500)
 * Add the project root folder to the documentation source by modifying the relative directory in ``os.path.abspath('.')`` to ``os.path.abspath('../..')``. Note that this change is based on the assumption that the *Python* project will be located in ``/NewProject`` (corresponds to the root directory) and that the docs will live in ``/NewProject/docs``.
 
 
-Build the docs (*html* and *PDF*)
+Build the docs (*html*)
 ---------------------------------
 
 Regular push: The docs are available at  `https://hylas.readthedocs.io <https://hylas.readthedocs.io>`_
@@ -235,9 +248,8 @@ First-time push: Login to `https://readthedocs.org <https://docs.readthedocs.io>
 
 In *Terminal* ``cd`` to the ``/ROOT/docs`` directory and type:
 make html
-sphinx-build -b rinoh source _build/rinoh
 
-<p>Documentation written by {{ author }} (last updated on {{ date }}.</p>
+
 
 Indices and tables
 ==================
