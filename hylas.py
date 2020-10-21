@@ -4,9 +4,11 @@ import webbrowser
 
 def lookup_epsg(file_name):
     """
-    Google information from file name
-    :param file_name: file name string with words separated by "-" or "_"
-    :return: open google search
+    Start a google search to retrieve information from a file name (or other ``str``) with information such as *UTM32*.
+    Args:
+        file_name (``str): file name  or other string with words separated by "-" or "_"
+    Note:
+        Opens a google search in the default web browser.
     """
     search_string = file_name.replace("_", "+").replace(".", "+").replace("-", "+")
     google_qry = "https://www.google.com/?#q=projection+crs+epsg+"

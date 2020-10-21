@@ -59,10 +59,13 @@ pattr = {
         "w": "wave_packet_desc_index",
         "W": "waveform_packet_size"
         }
-"""dict: parsing attributes to extract data layers (shapefile columns or multiple GeoTIFFs) from a las file.
+r"""``dict``: ``dict`` of attributes to extract data layers (shapefile columns or multiple GeoTIFFs) from a las file.
 
 All attributes defined in pattr.values() must be an attribute of a las_file object.
 Print all available las file attributes with:
+
+.. code-block:: python
+
     print(dir(LasPoint.las_file))
 """
 
@@ -84,4 +87,4 @@ wattr = {
         "w": "WaveformDesc",
         "W": "WaveSize"
         }
-"""dict: Column headers and GeoTIFF file names to use for parsing attributes."""
+"""``dict``: Column headers and GeoTIFF file names to use for parsing attributes."""

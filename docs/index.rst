@@ -3,8 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-:py:confval:`html_logo <sphinx:html_logo>`
-
 hylas
 =====
 
@@ -15,7 +13,7 @@ hylas
    hylas
 
 .. module:: hylas
-    :platform: Unix, Windows
+    :platform: Linux (Debian)
     :synopsis: Process las-files and extract predictor layers for random forest applications.
 
 .. moduleauthor:: Sebastian Schwindt <sebastian.schwindtATiws.uni-stuttgart.de>
@@ -131,54 +129,38 @@ Install *PyCharm* if not yet done (requires snap):
 Start *PyCharm* and create a new project from the ``lidar-analysis`` repository.
 Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable because we are working on a VM.
 
+Module functions, classes, and methods
+======================================
 
-``hylas``
----------
+The main file: hylas.py
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: hylas
    :members:
    :private-members:
-   :special-members:
 
-``hylas2``
----------
-
-.. automodule:: hylas.process_file
-   :members:
-   :private-members:
-   :special-members:
-
-``hylas3``
----------
-
-.. automodule:: hylas.*
-   :members:
-   :private-members:
-   :special-members:
-
-hylas config
----------------------------------------
+Basic parameters: config.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: config
    :members:
+   :private-members:
 
+Global functions: helpers.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-hylas helpers functions
----------------------------------------
-
-.. include:: helpers.py
+.. automodule:: helpers
    :members:
 
-hylas LasPoint class
----------------------------------------
+The ``LasPoint`` class
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: LasPoint.LasPoint
    :members:
    :private-members:
-   :special-members:
 
-hylas geo_utils master
----------------------------------------
+geo_utils
+^^^^^^^^^
 
 .. automodule:: geo_utils.geo_utils
    :members:
@@ -218,6 +200,8 @@ How to document hylas
 
 This package uses *Sphinx* `readthedocs <https://readthedocs.org/>`_ and the documentation regenerates automatically after pushing changes to the repositories ``main`` branch.
 
+To set styles, configure or add extensions to the documentation use ``ROOT/.readthedocs.yml`` and ``ROOT/docs/conf.py``.
+
 Functions and classes are automatically parsed for `docstrings <https://www.python.org/dev/peps/pep-0257/>`_ and implemented in the documentation. ``hylas`` docs use `google style <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_ docstring formats - please familiarize with the style format and strictly apply in all commits.
 
 To modify this documentation file, edit ``ROOT/docs/index.rst`` (uses `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_ format).
@@ -256,9 +240,6 @@ In the class or function docstrings use the following section headers:
 * ``Warns``
 * ``Yield (alias of Yields)``
 * ``Yields``
-
-
-To set styles, configure or add extensions to the documentation use ``ROOT/.readthedocs.yml`` and ``ROOT/docs/conf.py``.
 
 For local builds of the documentation, the following packages are required:
 

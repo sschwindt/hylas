@@ -2,12 +2,12 @@ from helpers import *
 
 
 class LasPoint:
-    """Load and convert las-files
+    """Load and convert las-files to ESRI point shapefiles and/or GeoTIFFs.
 
     Args:
         las_file_name (str): Name of a las file name
-        epsg (`int`): Authority Code - Geodetic Parameter Dataset ID (default = 3857)
-        use_attributes (`str`): Attributes (properties) to use from the las-file available in pattr (config.py)
+        epsg (int): Authority Code - Geodetic Parameter Dataset ID (default = 3857)
+        use_attributes (str): Attributes (properties) to use from the las-file available in pattr (config.py)
 
     Attributes:
         las_file (laspy.file.File): A laspy file object
@@ -40,12 +40,13 @@ class LasPoint:
         return "%s" % self.__class__.__name__
 
     def export2shp(self, **kwargs):
-        r"""Convert a las-file to shapefile
+        r"""Converts the las file points to a shapefile.
+
         Keyword Args:
             shapefile_name (:obj:`str`, optional): Optional shapefile name (must end on .shp).
-                                        default='/this/dir/las_file_name.shp'
+                                        default=``'/this/dir/las_file_name.shp'``
         Returns:
-            shapefile name (``str``)
+            ``str``: ``/path/to/shapefile.shp``
         """
         if kwargs.get("shapefile_name"):
             shapefile_name = kwargs.get("shapefile_name")
