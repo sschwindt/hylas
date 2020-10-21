@@ -3,6 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
+:py:confval:`html_logo <sphinx:html_logo>`
+
 hylas
 =====
 
@@ -31,11 +33,6 @@ Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>
 
 The other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
-
-
-.. default-role:: raw-html(raw)
-    :format: html
-
 .. note::
    As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
           * On *Linux* install `Debian GIS <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `Virtual Machine <https://hydro-informatics.github.io/vm.>`_
@@ -49,6 +46,7 @@ Prepare the system
 Open *Terminal*  and update the system:
 
 .. code:: console
+
     $ sudo apt update &&    $ sudo apt full-upgrade -y
 
 
@@ -56,6 +54,7 @@ Update Python references
 ---------------------------------------
 
 .. code:: console
+
    $ ls /usr/bin/python*
 
     /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.6  /usr/bin/python3.6m  /usr/bin/python3m
@@ -64,6 +63,7 @@ Update Python references
 Now set the ``python`` environment variable so that it points at *Python3*:
 
 .. code:: console
+
    $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
    $ alias python=python3
 
@@ -73,6 +73,7 @@ Additional libraries for geospatial analysis
 Make sure that `*PyGeos* <https://pygeos.readthedocs.io>`_ and `*tkinter* <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
 
 .. code:: console
+
    $ sudo apt-get install python3-tk
    $ sudo apt install tk8.6-dev
    $ sudo apt install libgeos-dev
@@ -96,6 +97,7 @@ Then use the *requirements* file from this repository and copy it to the project
 Clean up obsolete update remainders:
 
 .. code:: console
+
    $ sudo apt-get clean
    $ sudo apt-get autoclean
    $ sudo apt-get autoremove
@@ -108,6 +110,7 @@ Clone lidar-analysis repository
 In Clone the *lidar-analysis* repository:
 
 .. code:: console
+
    $ git clone https://github.com/sschwindt/lidar-analysis.git
 
 Note that this repository is private and you will need to send an inquiry to `Sebastian Schwindt <mailto:sebastian.schwindtATiws.uni-stuttgart.de?subject=GitHub%20Access%20to%lidar%repo>`_.
@@ -119,6 +122,7 @@ Get ready with *PyCharm*
 Install *PyCharm* if not yet done (requires snap):
 
 .. code:: console
+
    $ sudo apt install snapd
    $ sudo snap install pycharm-community --classic
 
@@ -127,34 +131,35 @@ Start *PyCharm* and create a new project from the ``lidar-analysis`` repository.
 Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable because we are working on a VM.
 
 
+``hylas``
+---------
 
-   hylas
-
-
-hylas main
----------------------------------------
-.. automodule:: hylas
+.. automodule:: ../hylas
    :members:
    :private-members:
    :special-members:
 
 hylas config
 ---------------------------------------
+
 .. automodule:: config
    :members:
 
 hylas helpers functions
 ---------------------------------------
+
 .. automodule:: helpers
    :members:
 
 hylas LasPoint class
 ---------------------------------------
+
 .. automodule:: LasPoint
    :members:
 
 hylas geo_utils master
 ---------------------------------------
+
 .. automodule:: geo_utils.geo_utils
    :members:
 
