@@ -93,7 +93,7 @@ if not 'READTHEDOCS' in os.environ:
         range(1, 100)
     ))
 
-html_logo = "docs/img/icon.svg"
+html_logo = os.path.abspath('..') + '/docs/img/icon.svg'
 html_show_sourcelink = True
 htmlhelp_basename = slug
 
