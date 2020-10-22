@@ -8,7 +8,7 @@ def float2int(raster_file_name, band_number=1):
 
     Args:
         raster_file_name (str): Target file name, including directory; must end on ``".tif"``.
-        band_number (int): The raster band number to open (default=``1``).
+        band_number (int): The raster band number to open (default: ``1``).
 
     Returns:
         str: ``"path/to/ew_raster_file.tif"``
@@ -105,7 +105,7 @@ def raster2polygon(file_name, out_shp_fn, band_number=1, field_name="values"):
         band_number (int): Raster band number to open (default: ``1``)
         field_name (str): Field name where raster pixel values will be stored (default: ``"values"``)
         add_area (bool): If ``True``, an "area" field will be added, where the area
-                          in the shapefiles unit system is calculated - default: ``False``)
+                          in the shapefiles unit system is calculated (default: ``False``)
 
      Returns:
          osgeo.ogr.DataSource: Python object of the provided ``out_shp_fn``.
@@ -139,10 +139,10 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     Args:
         in_shp_file_name (str): A shapefile name (with directory e.g., ``"C:/temp/poly.shp"``)
         out_raster_file_name (str): Target file name, including directory; must end on ``".tif"``
-        pixel_size (int): of pixel size (default: ``10``)
+        pixel_size (float): Pixel size as multiple of length units defined in the spatial reference (default: ``10``)
         no_data_value (int OR float): Numeric value for no-data pixels (default: ``-9999``)
-        rdtype (gdal.GDALDataType): The raster data type - default=``gdal.GDT_Float32`` (32 bit floating point)
-        overwrite (bool): Overwrite existing files (default=``True``).
+        rdtype (gdal.GDALDataType): The raster data type (default: ``gdal.GDT_Float32`` (32 bit floating point)
+        overwrite (bool): Overwrite existing files (default: ``True``).
 
     Keyword Args:
         field_name (str): Name of the shapefile's field with values to burn to raster pixel values.

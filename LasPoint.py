@@ -2,12 +2,12 @@ from helpers import *
 
 
 class LasPoint:
-    """Load and convert las-files to ESRI point shapefiles and/or GeoTIFFs.
+    """Las file container to convert datasets to ESRI point shapefiles and/or GeoTIFFs.
 
     Args:
         las_file_name (str): Directory to and name of a las file.
-        epsg (int): Authority Code - Geodetic Parameter Dataset ID (default=``3857``).
-        overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default=``True``).
+        epsg (int): Authority Code - Geodetic Parameter Dataset ID (default: ``3857``).
+        overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
         use_attributes (str): Attributes (properties) to use from the las-file available in pattr (config.py).
                                 (default: ``use_attributes="aciw"``).
 
@@ -46,9 +46,9 @@ class LasPoint:
 
         Keyword Args:
             shapefile_name (:obj:`str`, optional): Optional shapefile name (must end on .shp).
-                                        default=``'/this/dir/las_file_name.shp'``
+                                        (default: ``'/this/dir/las_file_name.shp'``).
         Returns:
-            ``str``: ``/path/to/shapefile.shp``
+            str: ``/path/to/shapefile.shp``
         """
         if kwargs.get("shapefile_name"):
             shapefile_name = kwargs.get("shapefile_name")
@@ -73,9 +73,6 @@ class LasPoint:
         print("File header info:")
         headers = [str(spec.name) for spec in self.las_file.header.header_format]
         print("   -- " + ", ".join(headers))
-
-        return {"x_raw": self.las_file.X, "y_raw": self.las_file.Y, "x_scaled": self.las_file.x, "y_scaled": las_file.y,
-                "scale": self.las_file.header.scale[0], "offset": self.las_file.header.offset[0]}
 
     def _build_data_frame(self):
         """ Builds the geopandas GeoDataFrame - auto-runs ``self._parse_attributes``."""

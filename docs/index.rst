@@ -7,7 +7,7 @@ HYLAS - USER GUIDE
 ==================
 
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 4
 
 .. module:: hylas
     :platform: Linux (Debian)
@@ -17,9 +17,11 @@ HYLAS - USER GUIDE
 
 Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this workflow to setup the working environment.
 
+Requirements
+============
 
-Get ready with the OSGeoLive VM
-================================
+Get ready with OSGeoLive VM
+---------------------------
 
 Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>`_ as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. Afterwards, make sure to:
 
@@ -36,7 +38,7 @@ The other system setups described on `hydro-informatics.github.io <https://hydro
 The following instructions refer to the usage of the *OSGeoLive* VM.
 
 Prepare your system
----------------------------------------
+^^^^^^^^^^^^^^^^^^^
 
 Open *Terminal*  and update the system:
 
@@ -152,8 +154,14 @@ Install *PyCharm* if not yet done (requires snap):
 Start *PyCharm* and create a new project from the ``hylas`` repository.
 Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable because we are working on a VM.
 
-Module functions, classes, and methods
-======================================
+Application
+===========
+
+Basic usage
+-----------
+
+Package functions, classes, and methods
+=======================================
 
 The main file: hylas.py
 -----------------------

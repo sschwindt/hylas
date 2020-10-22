@@ -4,8 +4,7 @@ import webbrowser
 
 
 def lookup_epsg(file_name):
-    """
-    Start a google search to retrieve information from a file name (or other ``str``) with information such as *UTM32*.
+    """Starts a google search to retrieve information from a file name (or other ``str``) with information such as *UTM32*.
     Args:
         file_name (str): file name  or other string with words separated by "-" or "_"
 
@@ -20,7 +19,7 @@ def lookup_epsg(file_name):
 @log_actions
 @cache
 def process_file(source_file_name, epsg, **opts):
-    """Load a las-file and convert it to another geospatial file format (**opts)
+    """Loads a las-file and convert it to another geospatial file format (**opts)
 
     Args:
         source_file_name (`str`): Full directory of the source file to use with methods
@@ -30,16 +29,16 @@ def process_file(source_file_name, epsg, **opts):
         **opts: optional keyword arguments
 
     Keyword Args:
-        create_dem (bool): Default=False - set to True for creating a digital elevation model (DEM)
+        create_dem (bool): default: False - set to True for creating a digital elevation model (DEM)
         extract_attributes (str): Attributes to extract from the las-file available in pattr (config.py)
         methods(`list` [`str`]): Enabled list strings are las2shp, las2tif, shp2tif
-        overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default=``True``).
+        overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
         pixel_size (float): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
         shapefile_name (str): Name of the point shapefile to produce with las2*
         tif_prefix (str): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
 
     Returns:
-        bool: True if successful, False otherwise
+        bool: ``True`` if successful, ``False`` otherwise
     """
 
     default_keys = {"extract_attributes": "aci",

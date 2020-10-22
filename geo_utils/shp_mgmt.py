@@ -123,7 +123,7 @@ def verify_shp_name(shp_file_name, shorten_to=13):
         
     Args:
         shp_file_name (str): A shapefile name (with directory e.g., ``"C:/temp/poly.shp"``).
-        shorten_to (int): The number of characters the shapefile name should have (default=``13``).
+        shorten_to (int): The number of characters the shapefile name should have (default: ``13``).
     
     Returns:
         str: A shapefile name (including path if provided) with a length of ``shorten_to``.

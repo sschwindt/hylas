@@ -8,7 +8,7 @@ def open_raster(file_name, band_number=1):
     
     Args:
         file_name (str): The raster file directory and name.
-        band_number (int): The Raster band number to open (default=``1``).
+        band_number (int): The Raster band number to open (default: ``1``).
         
     Returns:
         osgeo.gdal.Dataset: A raster dataset a Python object.
@@ -40,12 +40,12 @@ def create_raster(file_name, raster_array, origin=None, epsg=4326, pixel_width=1
         file_name (str): Target file name, including directory; must end on ``".tif"``.
         raster_array (ndarray): Values to rasterize.
         origin (tuple): Coordinates (x, y) of the origin.
-        epsg (int): EPSG:XXXX projection to use (default=``4326``).
-        pixel_height (int): Pixel height as multiple of the base units defined with the EPSG number (default=``10``meters).
-        pixel_width (int): Pixel width as multiple of the base units defined with the EPSG number (default=``10``meters).
-        nan_val (``int`` or ``float``): No-data value to be used in the raster. Replaces non-numeric and ``np.nan`` in the ``ndarray``. (default=``geoconfig.nan_value``).
-        rdtype: gdal.GDALDataType raster data type - default=gdal.GDT_Float32 (32 bit floating point)
-        geo_info (tuple): Defines a ``gdal.DataSet.GetGeoTransform`` object  and supersedes ``origin``, ``pixel_width``, ``pixel_height`` (default=``False``).
+        epsg (int): EPSG:XXXX projection to use (default: ``4326``).
+        pixel_height (int): Pixel height as multiple of the base units defined with the EPSG number (default: ``10``meters).
+        pixel_width (int): Pixel width as multiple of the base units defined with the EPSG number (default: ``10``meters).
+        nan_val (``int`` or ``float``): No-data value to be used in the raster. Replaces non-numeric and ``np.nan`` in the ``ndarray``. (default: ``geoconfig.nan_value``).
+        rdtype: gdal.GDALDataType raster data type - default: gdal.GDT_Float32 (32 bit floating point)
+        geo_info (tuple): Defines a ``gdal.DataSet.GetGeoTransform`` object  and supersedes ``origin``, ``pixel_width``, ``pixel_height`` (default: ``False``).
         
     Returns:
         int: ``0`` if successful, otherwise ``-1``.
@@ -115,7 +115,7 @@ def raster2array(file_name, band_number=1):
     
     Args:
         file_name (str): Target file name, including directory; must end on ``".tif"``.
-        band_number (int): The raster band number to open (default=``1``).
+        band_number (int): The raster band number to open (default: ``1``).
         
     Returns:
         ndarray: Indicated raster band, where no-data values are replaced with ``np.nan``.

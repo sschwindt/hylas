@@ -19,16 +19,16 @@ def check_cache():
 
 
 def dict2str(dictionary, **kwargs):
-    """ Converts a dict to a string expression.
+    """Converts a dict to a string expression.
 
     Args:
-        dictionary (dict): dictionary to convert string
+        dictionary (dict): A dictionary to convert to a string.
 
     Keyword Args:
-            inverse_dict(boolean): Apply inverse order of string (default=False)
+        inverse_dict(boolean): Apply inverse order of string (default=``False``).
 
     Returns:
-        ``str``
+        str: The dictionary as flattened text.
 
     Example:
         ``dict={e: 1, f: 2, ...}`` -> ``"{e: 1, f: 2, ...}"``
@@ -66,14 +66,13 @@ def log_actions(fun):
 
 
 def remove_directory(directory):
-    """
-    Removes a directory and all its contents - be careful!
+    """Removes a directory and all its contents - be careful!
 
     Args:
         directory (str): directory to remove (delete)
 
     Returns:
-        None
+        None: Deletes directory.
     """
     try:
         for root, dirs, files in os.walk(directory):
