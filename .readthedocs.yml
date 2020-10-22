@@ -29,8 +29,6 @@ python:
       path: .
       extra_requirements:
         - docs
-    - method: setuptools
-      path: gdal
   system_packages: true
 
 # Server Side Search settings
