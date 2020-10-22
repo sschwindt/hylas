@@ -7,10 +7,7 @@ HYLAS - USER GUIDE
 ==================
 
 .. toctree::
-    :maxdepth: 4
-    :caption: Main file
-   README
-   hylas
+    :maxdepth: 3
 
 .. module:: hylas
     :platform: Linux (Debian)
@@ -91,6 +88,7 @@ Then install: ``pip3``:
 Then use the *requirements* file from this repository and copy it to the project folder. In *Terminal* type:
 
 .. code:: console
+
    $ pip3 install -r requirements.txt
 
 Clean up obsolete update remainders:
@@ -112,6 +110,7 @@ Clone hylas
 Open *Terminal*, create a project folder and ``cd`` to the project folder:
 
 .. code:: console
+
    $ mkdir hylas-project
    $ cd hylas-project
 
@@ -139,7 +138,7 @@ In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) requir
 Get ready with *PyCharm*
 -------------------------
 
-.. admonition::
+.. admonition:: IDE - your choice
    Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option to work with *hylas*.
 
 Install *PyCharm* if not yet done (requires snap):

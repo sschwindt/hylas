@@ -26,9 +26,9 @@ sys.path.insert(0, os.path.abspath('..'))
 #sys.setrecursionlimit(1500)
 sys.path.append(os.path.abspath('..') + '/geo_utils')
 
-# the following module will be emulated void imports (automocked)
+# the following modules will be mocked (i.e. bogus imports - required for C-dependent packages)
 autodoc_mock_imports = ['alphashape', 'numpy', 'gdal', 'laspy', 'geopandas', 'rasterstats', 'scikit-image',
-                        'pandas', 'shapely']
+                        'osr', 'pandas', 'shapely']
 
 import sphinx_rtd_theme
 from sphinx.locale import _
