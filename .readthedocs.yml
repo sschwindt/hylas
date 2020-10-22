@@ -29,6 +29,7 @@ python:
       path: .
     - method: setuptools
       path: package
+    - install_requires: true
   system_packages: true
 
 # Server Side Search settings
