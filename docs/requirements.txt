@@ -29,4 +29,4 @@ laspy>=1.7.0
 pandas>=1.1.3
 geopandas>=0.8.1
 shapely>=1.7.1
-GDAL==gdal-config
+pygdal
