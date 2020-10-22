@@ -1,5 +1,3 @@
-actinia-core>=0.0.0
-actinia-statistic-plugin>=0.0.0
 affine>=2.3.0
 alabaster>=0.7.12
 alphashape>=1.1.0
