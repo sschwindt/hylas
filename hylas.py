@@ -7,7 +7,8 @@ def lookup_epsg(file_name):
     """
     Start a google search to retrieve information from a file name (or other ``str``) with information such as *UTM32*.
     Args:
-        file_name (``str): file name  or other string with words separated by "-" or "_"
+        file_name (str): file name  or other string with words separated by "-" or "_"
+
     Note:
         Opens a google search in the default web browser.
     """
@@ -19,7 +20,7 @@ def lookup_epsg(file_name):
 @log_actions
 @cache
 def process_file(source_file_name, epsg, **opts):
-    r"""Load a las-file and convert it to another geospatial file format (**opts)
+    """Load a las-file and convert it to another geospatial file format (**opts)
 
     Args:
         source_file_name (`str`): Full directory of the source file to use with methods
@@ -29,27 +30,50 @@ def process_file(source_file_name, epsg, **opts):
         **opts: optional keyword arguments
 
     Keyword Args:
+        create_dem (bool): Default=False - set to True for creating a digital elevation model (DEM)
         extract_attributes (str): Attributes to extract from the las-file available in pattr (config.py)
         methods(`list` [`str`]): Enabled list strings are las2shp, las2tif, shp2tif
-        tar_shapefile_name (str): Name of the point shapefile to produce with las2*
-        tar_tif_prefix (str): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
-        create_dem (bool): Default=False - set to True for creating a digital elevation model (DEM)
-        pixel_size (int): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
+        overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default=``True``).
+        pixel_size (float): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
+        shapefile_name (str): Name of the point shapefile to produce with las2*
+        tif_prefix (str): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
 
     Returns:
         bool: True if successful, False otherwise
     """
-    epsg = 25832
 
-    las_inn = LasPoint(las_file_name=las_file_name, epsg=25832, use_attributes="aci")
+    default_keys = {"extract_attributes": "aci",
+                    "methods": ["las2shp"],
+                    "shapefile_name": os.path.abspath("") + "/{0}.shp".format(source_file_name.split(".")[0]),
+                    "tif_prefix": os.path.abspath("") + "/{0}_".format(source_file_name.split(".")[0]),
+                    "overwrite": True,
+                    "create_dem": False,
+                    "pixel_size": 1.0,
+                    }
 
-    las_pts_shp = os.path.abspath("") + "/data/laspts.shp"
-    las_inn.export2shp(shapefile_name=las_pts_shp)
+    for k in default_keys.values():
+        if opts.get(k):
+            default_keys[k] = opts.get(k)
 
-    tar_dir = os.path.abspath("") + "/data/lasras.tif"
-    geo_utils.rasterize(in_shp_file_name=las_pts_shp, out_raster_file_name=tar_dir, pixel_size=5,
-                        field_name=wattr["i"])
+    las_object = LasPoint(las_file_name=source_file_name,
+                          epsg=epsg,
+                          use_attributes=default_keys["extract_attributes"],
+                          overwrite=default_keys["overwrite"])
 
+    if "las2shp" in default_keys["methods"]:
+        las_object.export2shp(shapefile_name=default_keys["shapefile_name"])
 
-# if __name__ == "__main__":
-#     process_file()
+    if not os.path.isfile(default_keys["shapefile_name"]):
+        logging.warning("No shapefile %s found. Cannot continue." % default_keys["shapefile_name"])
+        return -1
+    else:
+        logging.info(" * Using %s to create GeoTIFF(s)." % default_keys["shapefile_name"])
+
+    if "2tif" in "".join(default_keys["methods"]):
+        for attr in default_keys["extract_attributes"]:
+            tif_name = "{0}{1}.tif".format(default_keys["shapefile_name"], wattr[attr])
+            geo_utils.rasterize(in_shp_file_name=default_keys["shapefile_name"],
+                                out_raster_file_name=tif_name,
+                                pixel_size=default_keys["pixel_size"],
+                                field_name=wattr[attr],
+                                overwrite=default_keys["overwrite"])

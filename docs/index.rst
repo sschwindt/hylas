@@ -138,8 +138,8 @@ In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) requir
 Get ready with *PyCharm*
 -------------------------
 
-.. admonition:: IDE - your choice
-   Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option to work with *hylas*.
+.. note:: IDE - your choice
+   Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option for working with *hylas*.
 
 Install *PyCharm* if not yet done (requires snap):
 

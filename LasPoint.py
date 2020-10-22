@@ -5,30 +5,32 @@ class LasPoint:
     """Load and convert las-files to ESRI point shapefiles and/or GeoTIFFs.
 
     Args:
-        las_file_name (str): Name of a las file name
-        epsg (int): Authority Code - Geodetic Parameter Dataset ID (default = 3857)
-        use_attributes (str): Attributes (properties) to use from the las-file available in pattr (config.py)
+        las_file_name (str): Directory to and name of a las file.
+        epsg (int): Authority Code - Geodetic Parameter Dataset ID (default=``3857``).
+        overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default=``True``).
+        use_attributes (str): Attributes (properties) to use from the las-file available in pattr (config.py).
+                                (default: ``use_attributes="aciw"``).
 
     Attributes:
         las_file (laspy.file.File): A laspy file object
         las_attributes (str): Defined with ``use_attributes``
         epsg (int): Authority code
         gdf (geopandas.GeoDataFrame): geopandas data frame containing all points of the las file with the properties (columns) defined by ``use_attributes``
+        overwrite (bool): Enable or disable overwriting existing files (default: ``True``).
         srs (osr.SpatialReference): The geo-spatial reference imported from ``epsg``
     """
 
-    def __init__(self, las_file_name, epsg=3857, use_attributes="aciw"):
+    def __init__(self, las_file_name, epsg=3857, use_attributes="aciw", overwrite=True):
 
         self.las_file = laspy.file.File(las_file_name, mode="r")
 
         self.las_attributes = use_attributes
         self.epsg = epsg
         self.gdf = geopandas.GeoDataFrame()  # void initialization
+        self.overwrite = overwrite
         self.srs = osr.SpatialReference()
         self.srs.ImportFromEPSG(epsg)
         logging.info("Using EPSG = %04i" % epsg)
-
-        self.__shape_file_exists__ = False
 
         self._build_data_frame()
 
@@ -40,7 +42,7 @@ class LasPoint:
         return "%s" % self.__class__.__name__
 
     def export2shp(self, **kwargs):
-        r"""Converts the las file points to a shapefile.
+        r"""Converts las file points to a point shapefile.
 
         Keyword Args:
             shapefile_name (:obj:`str`, optional): Optional shapefile name (must end on .shp).
@@ -53,9 +55,14 @@ class LasPoint:
         else:
             shapefile_name = os.path.abspath("") + "/{0}.shp".format(self.las_file.filename)
 
+        if os.path.isfile(shapefile_name) and self.overwrite is False:
+            logging.info(" * Using existing shapefile %s." % shapefile_name)
+            return shapefile_name
+
         logging.info(" * Writing geopandas.GeoDataFrame to shapefile (%s) ..." % shapefile_name)
         self.gdf.to_file(filename=shapefile_name, driver="ESRI Shapefile")
         logging.info("   -- Done.")
+        return shapefile_name
 
     def get_file_info(self):
         r""" Prints las file information to console."""
@@ -71,7 +78,7 @@ class LasPoint:
                 "scale": self.las_file.header.scale[0], "offset": self.las_file.header.offset[0]}
 
     def _build_data_frame(self):
-        r""" Builds the geopandas GeoDataFrame - auto-runs self._parse_attributes."""
+        """ Builds the geopandas GeoDataFrame - auto-runs ``self._parse_attributes``."""
         point_dict = self._parse_attributes()
         # for attr in self.pts_description:
         #     if not re.search("[x-z]", attr):

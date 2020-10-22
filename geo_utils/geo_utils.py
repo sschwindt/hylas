@@ -7,18 +7,18 @@ def float2int(raster_file_name, band_number=1):
     """Converts a float number raster to an integer raster (required for converting a raster to a polygon shapefile).
 
     Args:
-        raster_file_name (str): Target file name, including directory; must end on ".tif"
+        raster_file_name (str): Target file name, including directory; must end on ``".tif"``.
         band_number (int): The raster band number to open (default: 1)
 
     Returns:
-        ``str``: ``path/to/ew_raster_file.tif``
+        ``str``: ``"path/to/ew_raster_file.tif"``
     """
     
     raster, array, geo_transform = raster2array(raster_file_name, band_number=band_number)
     try:
         array = array.astype(int)
     except ValueError:
-        print("Error: Invalid raster pixel values.")
+        logging.error("Invalid raster pixel values.")
         return raster_file_name
     new_name = raster_file_name.split(".tif")[0] + "_int.tif"
 
@@ -36,12 +36,12 @@ def float2int(raster_file_name, band_number=1):
 
 
 def raster2line(raster_file_name, out_shp_fn, pixel_value):
-    """ Converts a raster to a line shapefile, where pixel_value determines line start and end points.
+    """Converts a raster to a line shapefile, where ``pixel_value`` determines line start and end points.
     
     Args:
-        raster_file_name (str): of input raster file name, including directory; must end on ".tif"
-        out_shp_fn (str): of target shapefile name, including directory; must end on ".shp"
-        pixel_value (int or float): of a pixel value
+        raster_file_name (str): of input raster file name, including directory; must end on ``".tif"``.
+        out_shp_fn (str): of target shapefile name, including directory; must end on ``".shp"``.
+        pixel_value (``int`` or ``float``): of a pixel value
 
      Returns:
          ``None``: Writes new shapefile to disk.
@@ -56,7 +56,7 @@ def raster2line(raster_file_name, out_shp_fn, pixel_value):
     # extract pixels with the user-defined pixel value from the raster array
     trajectory = np.where(array == pixel_value)
     if np.count_nonzero(trajectory) is 0:
-        print("Error: The defined pixel_value (%s) does not occur in the raster band." % str(pixel_value))
+        logging.error("The defined pixel_value (%s) does not occur in the raster band." % str(pixel_value))
         return None
 
     # convert pixel offset to coordinates and append to nested list of points
@@ -97,7 +97,7 @@ def raster2line(raster_file_name, out_shp_fn, pixel_value):
 
 
 def raster2polygon(file_name, out_shp_fn, band_number=1, field_name="values"):
-    """ Converts a raster to a polygon shapefile.
+    """Converts a raster to a polygon shapefile.
 
     Args:
         file_name (str): Target file name, including directory; must end on ``".tif"``
@@ -128,12 +128,12 @@ def raster2polygon(file_name, out_shp_fn, band_number=1, field_name="values"):
     # create projection file
     srs = get_srs(raster)
     make_prj(out_shp_fn, int(srs.GetAuthorityCode(None)))
-    print(" * success (Polygonize): wrote %s" % str(out_shp_fn))
+    logging.info(" * success (Polygonize): wrote %s" % str(out_shp_fn))
     return new_shp
 
 
 def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_value=-9999,
-              rdtype=gdal.GDT_Float32, **kwargs):
+              rdtype=gdal.GDT_Float32, overwrite=True, **kwargs):
     """Converts any ESRI shapefile to a raster.
 
     Args:
@@ -142,6 +142,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         pixel_size (int): of pixel size (default: ``10``)
         no_data_value (int OR float): Numeric value for no-data pixels (default: ``-9999``)
         rdtype (gdal.GDALDataType): The raster data type - default=``gdal.GDT_Float32`` (32 bit floating point)
+        overwrite (bool): Overwrite existing files (default=``True``).
 
     Keyword Args:
         field_name (str): Name of the shapefile's field with values to burn to raster pixel values.
@@ -150,11 +151,16 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         ``None``: Creates the GeoTIFF raster defined with ``out_raster_file_name``.
     """
 
+    # check if any action is required
+    if os.path.isfile(out_raster_file_name) and not overwrite:
+        logging.info(" * %s already exists. Nothing to do." % out_raster_file_name)
+        return None
+
     # open data source
     try:
         source_ds = ogr.Open(in_shp_file_name)
     except RuntimeError as e:
-        print("Error: Could not open %s." % str(in_shp_file_name))
+        logging.error("Could not open %s." % str(in_shp_file_name))
         return None
     source_lyr = source_ds.GetLayer()
 
@@ -169,7 +175,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     try:
         target_ds = gdal.GetDriverByName('GTiff').Create(out_raster_file_name, x_res, y_res, 1, eType=rdtype)
     except RuntimeError as e:
-        print("Error: Could not create %s." % str(out_raster_file_name))
+        logging.error("Could not create %s." % str(out_raster_file_name))
         return None
     target_ds.SetGeoTransform((x_min, pixel_size, 0, y_max, 0, -pixel_size))
     band = target_ds.GetRasterBand(1)
@@ -195,7 +201,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
             gdal.RasterizeLayer(target_ds, [1], source_lyr, None, None, burn_values=[0],
                                 options=["ALL_TOUCHED=TRUE"])
     except RuntimeError as e:
-        print("Error: Could not rasterize (burn values from %s)." % str(in_shp_file_name))
+        logging.error("Could not rasterize (burn values from %s)." % str(in_shp_file_name))
         return None
 
     # release raster band

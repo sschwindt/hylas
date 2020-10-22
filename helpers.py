@@ -2,6 +2,7 @@ from config import *
 
 
 def cache(fun):
+    """Makes a function running in a ``__cache__`` sub-folder to enable deleting temporary trash files."""
     def wrapper(*args, **kwargs):
         check_cache()
         fun(*args, **kwargs)
@@ -10,6 +11,7 @@ def cache(fun):
 
 
 def check_cache():
+    """Creates the cache folder if it does not exist."""
     try:
         os.makedirs(cache_folder)
     except OSError:
@@ -17,14 +19,19 @@ def check_cache():
 
 
 def dict2str(dictionary, **kwargs):
-    """
-    convert a dict to a STR expression - return "{e: 1, f: 2, ...}"
-    :param dictionary: dictionary to convert
-    :type dictionary: ``dict``
-    :Keyword Arguments:
-            * *inverse_dict* (``boolean``):
-            Apply inverse order of string (default=False)
-    :return: string
+    """ Converts a dict to a string expression.
+
+    Args:
+        dictionary (dict): dictionary to convert string
+
+    Keyword Args:
+            inverse_dict(boolean): Apply inverse order of string (default=False)
+
+    Returns:
+        ``str``
+
+    Example:
+        ``dict={e: 1, f: 2, ...}`` -> ``"{e: 1, f: 2, ...}"``
     """
 
     if kwargs.get("inverse_dict"):
@@ -50,6 +57,7 @@ def dict2str(dictionary, **kwargs):
 
 
 def log_actions(fun):
+    """Wraps a function with a logger. All actions of the wrapped function can be writting to ``ROOT/logfile.log``."""
     def wrapper(*args, **kwargs):
         start_logging()
         fun(*args, **kwargs)
@@ -59,9 +67,13 @@ def log_actions(fun):
 
 def remove_directory(directory):
     """
-    Remove directory and all its contents - be careful!
-    :param directory: string
-    :return: None
+    Removes a directory and all its contents - be careful!
+
+    Args:
+        directory (str): directory to remove (delete)
+
+    Returns:
+        None
     """
     try:
         for root, dirs, files in os.walk(directory):
@@ -79,6 +91,7 @@ def remove_directory(directory):
 
 
 def start_logging():
+    """Creates a log file (``ROOT/logfile.log``)."""
     logging.basicConfig(filename="logfile.log", format="[%(asctime)s] %(message)s",
                         filemode="w", level=logging.INFO)
     logging.getLogger().addHandler(logging.StreamHandler())
