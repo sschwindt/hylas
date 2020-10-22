@@ -25,11 +25,8 @@ python:
   version: 3.8
   install:
     - requirements: docs/requirements.txt
-    - method: pip
-      path: .
     - method: setuptools
-      path: package
-    - install_requires: true
+      path: .
   system_packages: true
 
 # Server Side Search settings
