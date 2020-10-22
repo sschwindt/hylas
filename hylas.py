@@ -69,11 +69,14 @@ def process_file(source_file_name, epsg, **opts):
         logging.info(" * Using %s to create GeoTIFF(s)." % default_keys["shapefile_name"])
 
     if "2tif" in "".join(default_keys["methods"]):
+        logging.info(" * Creating GeoTIFFs ...")
         for attr in default_keys["extract_attributes"]:
-            tif_name = "{0}{1}.tif".format(default_keys["shapefile_name"], wattr[attr])
+            tif_name = "{0}{1}.tif".format(default_keys["tif_prefix"], wattr[attr])
+            logging.info("   -- Creating %s ..." % tif_name)
             geo_utils.rasterize(in_shp_file_name=default_keys["shapefile_name"],
                                 out_raster_file_name=tif_name,
                                 pixel_size=default_keys["pixel_size"],
                                 field_name=wattr[attr],
                                 overwrite=default_keys["overwrite"])
+        logging.info("   -- Done.")
     return True
