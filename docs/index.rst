@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-hylas
-=====
+HYLAS USER GUIDE
+================
 
 .. toctree::
     :maxdepth: 4
@@ -32,13 +32,13 @@ Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>
 The other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
 .. note::
-   As an alternative for the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
+   As an alternative to the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
           * On *Linux* install `Debian GIS <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `Virtual Machine <https://hydro-informatics.github.io/vm.>`_
           * On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
 
 The following instructions refer to the usage of the *OSGeoLive* VM.
 
-Prepare the system
+Prepare your system
 ---------------------------------------
 
 Open *Terminal*  and update the system:
@@ -69,7 +69,7 @@ Now set the ``python`` environment variable so that it points at *Python3*:
 
 Additional libraries for geospatial analysis
 ---------------------------------------------
-Make sure that `*PyGeos* <https://pygeos.readthedocs.io>`_ and `*tkinter* <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
+Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
 
 .. code:: console
 
@@ -129,7 +129,7 @@ Get ready with *PyCharm*
 -------------------------
 
 .. admonition::
-   Any other Python IDE is also OK for working with hylas. Setting up PyCharm is explained here as just one option to work with hylas.
+   Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option to work with *hylas*.
 
 Install *PyCharm* if not yet done (requires snap):
 
@@ -181,12 +181,12 @@ geo_utils
 hylas geo_utils geoconfig
 ---------------------------------------
 
-.. automodule:: geo_utils.geoconfig
+.. automodule:: /geo_utils.*
    :members:
 
 hylas geo_utils Raster Management
 ---------------------------------------
-.. automodule:: geo_utils.raster_mgmt
+.. automodule:: geo_utils.raster_mgmt.*
    :members:
 
 hylas geo_utils Shapefile Management
