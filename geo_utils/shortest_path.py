@@ -1,5 +1,5 @@
 import networkx as nx
-from geo_utils import *
+from .geo_utils import *
 import json
 from shapely.geometry import asLineString, asMultiPoint
 
@@ -9,14 +9,15 @@ from shapely.geometry import asLineString, asMultiPoint
 
 
 def create_shortest_path(line_shp_name, start_node_id, end_node_id):
-    """Calcluatea shortest path from a network of lines.
+    """Calculates the shortest path from a network of lines.
     
     Args:
         line_shp_name (str): Input shapefile name
         start_node_id (int): Start node ID
         end_node_id (int): End node ID
+
     Returns:
-        Creates a graph of nodes (coordinate pairs) connecting a start node with an end node in the defined ``line_shp_name``.
+        None: Creates a graph of nodes (coordinate pairs) connecting a start node with an end node in the defined ``line_shp_name``.
     """
 
     # load shapefile
@@ -58,7 +59,8 @@ def get_path(n0, n1, nx_list_subgraph):
         nx_list_subgraph (list):(see create shortest path)
         
     Returns: 
-        An array of point coordinates along the line linking these two nodes."""
+        ndarray: An array of point coordinates along the line linking these two nodes.
+    """
     return np.array(json.loads(nx_list_subgraph[n0][n1]['Json'])['coordinates'])
 
 
@@ -70,7 +72,7 @@ def get_full_path(path, nx_list_subgraph):
         nx_list_subgraph (list): See ``create_shortest path`` function
         
     Returns: 
-        ``ndarray``: Coordinate pairs along a path.
+        ndarray: Coordinate pairs along a path.
     """
     p_list = []
     curp = None
@@ -87,8 +89,11 @@ def get_full_path(path, nx_list_subgraph):
 
 def write_geojson(outfilename, indata):
     """Creates a new GeoJSON file
+
+    Args>
         outfilename (str): Name for the output file
-        indata (array):
+        indata (array): Array to write tyo the geojson file.
+
     Returns: 
         Creates a new GeoJSON file.
     """

@@ -8,9 +8,11 @@ def get_esriwkt(epsg):
     Args:
         epsg (int): EPSG Authority Code
 
-    Returns:  (str): containing esriwkt (if error: default epsg=4326 is used)
+    Returns:
+        str: An esriwkt string (if an error occur, the default epsg=``4326`` is used).
 
-    Example: ``get_esriwkt(4326)``
+    Example:
+        ``get_esriwkt(4326)``
     """
     try:
         with urllib.request.urlopen("http://spatialreference.org/ref/epsg/{0}/esriwkt/".format(epsg)) as response:
@@ -34,8 +36,10 @@ def get_srs(dataset):
     """Gets the spatial reference of any ``gdal.Dataset``.
 
     Args:
-        dataset (gdal.Dataset): (shapefile or raster)
-    Returns: : osr.SpatialReference
+        dataset (gdal.Dataset): A shapefile or raster.
+
+    Returns:
+        osr.SpatialReference: A spatial reference object.
     """
     gdal.UseExceptions()
 
@@ -73,7 +77,7 @@ def get_wkt(epsg, wkt_format="esriwkt"):
         wkt_format (str): of wkt format (default is esriwkt for shapefile projections)
       
     Returns:
-        ``str``: WKT (if error: returns default corresponding to ``epsg=4326``).
+        str: WKT (if error: returns default corresponding to ``epsg=4326``).
     """
     default = 'GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["Degree",0.017453292519943295],UNIT["Meter",1]]'
     spatial_ref = osr.SpatialReference()
@@ -94,7 +98,7 @@ def make_prj(shp_file_name, epsg):
     """Generates a projection file for a shapefile.
 
     Args:
-        shp_file_name (str): of a shapefile name (with directory e.g., "C:/temp/poly.shp")
+        shp_file_name (str): of a shapefile name (with directory e.g., ``"C:/temp/poly.shp"``).
         epsg (int): EPSG Authority Code
     """
     shp_dir = shp_file_name.strip(shp_file_name.split("/")[-1].split("\\")[-1])
@@ -112,7 +116,7 @@ def reproject(source_dataset, new_projection_dataset):
         new_projection_dataset (gdal.Dataset): Shapefile or raster with new projection info.
         
     Returns:
-        If the source is a raster: Creates a GeoTIFF in same directory as source with a ``"_reprojected"`` suffix in the file name.
+        None: If the source is a raster: Creates a GeoTIFF in same directory as source with a ``"_reprojected"`` suffix in the file name.
     """
 
     # get source and target spatial reference systems

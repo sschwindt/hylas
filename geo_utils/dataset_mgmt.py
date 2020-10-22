@@ -8,9 +8,11 @@ def coords2offset(geo_transform, x_coord, y_coord):
 
     Args:
         geo_transform: osgeo.gdal.Dataset.GetGeoTransform() object
-        x_coord (float): of x-coordinate
-        y_coord (float): of y-coordinate
-    Returns: offset_x, offset_y (both integer of pixel numbers)
+        x_coord (float): x-coordinate
+        y_coord (float): y-coordinate
+
+    Returns:
+        tuple: Number of pixels ``(offset_x, offset_y)``,  both ``int``s.
     """
     try:
         origin_x = geo_transform[0]
@@ -34,11 +36,11 @@ def get_layer(dataset, band_number=1):
     """Gets a ``layer=band`` (``RasterDataSet``) or ``layer=ogr.Dataset.Layer`` of any dataset.
 
     Args:
-        dataset: osgeo.gdal.Dataset or osgeo.ogr.DataSource
-        band_number: ONLY FOR RASTERS - INT of the raster band number to open (default=``1``).
+        dataset (``osgeo.gdal.Dataset`` or ``osgeo.ogr.DataSource``): Either a raster or a shapefile.
+        band_number (int): Only use with rasters to define a band number to open (default=``1``).
     
     Returns: 
-        ``dict``: ``{GEO-TYPE: if raster: raster_band, if vector: GetLayer(), else: None}``
+        dict: ``{GEO-TYPE: if raster: raster_band, if vector: GetLayer(), else: None}``
     """
     if verify_dataset(dataset) == "raster":
         return {"type": "raster", "layer": dataset.GetRasterBand(band_number)}
@@ -55,7 +57,8 @@ def offset2coords(geo_transform, offset_x, offset_y):
         offset_x (int): x number of pixels.
         offset_y (int): y number of pixels.
         
-    Returns: x_coord, y_coord (FLOATs of x-y-coordinates)
+    Returns:
+        tuple: ``float``s of x-y-coordinates ``(x_coord, y_coord)``.
     """
     try:
         origin_x = geo_transform[0]
@@ -82,7 +85,7 @@ def verify_dataset(dataset):
         dataset (``osgeo.gdal.Dataset`` or ``osgeo.ogr.DataSource``): Dataset to verify.
     
     Returns:
-        ``string``: Either "mixed", "raster", or "vector".
+        string: Either "mixed", "raster", or "vector".
     """
     # Check the contents of an osgeo.gdal.Dataset
     try:

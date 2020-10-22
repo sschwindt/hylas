@@ -11,7 +11,8 @@ def open_raster(file_name, band_number=1):
         band_number (int): The Raster band number to open (default=``1``).
         
     Returns:
-        ``osgeo.gdal.Dataset``, ``osgeo.gdal.Band objects``
+        osgeo.gdal.Dataset: A raster dataset a Python object.
+        osgeo.gdal.Band: The defined raster band as Python object.
     """
     gdal.UseExceptions()
     # open raster file or return None if not accessible
@@ -47,7 +48,7 @@ def create_raster(file_name, raster_array, origin=None, epsg=4326, pixel_width=1
         geo_info (tuple): Defines a ``gdal.DataSet.GetGeoTransform`` object  and supersedes ``origin``, ``pixel_width``, ``pixel_height`` (default=``False``).
         
     Returns:
-        ``new_raster``: An ``osgeo.gdal.Dataset`` (uses GTiff driver).
+        int: ``0`` if successful, otherwise ``-1``.
     """
     gdal.UseExceptions()
     # check out driver
@@ -117,8 +118,8 @@ def raster2array(file_name, band_number=1):
         band_number (int): The raster band number to open (default=``1``).
         
     Returns:
-        ``ndarray``: Indicated raster band, where no-data values are replaced with ``np.nan``.
-        ``GeoTransform``: The GeoTransformation used in the original raster.
+        ndarray: Indicated raster band, where no-data values are replaced with ``np.nan``.
+        GeoTransform: The GeoTransformation used in the original raster.
     """
     # open the raster and band (see above)
     raster, band = open_raster(file_name, band_number=band_number)
@@ -147,6 +148,6 @@ def clip_raster(polygon, in_raster, out_raster):
         out_raster (str): Name of the target raster, including its directory.
         
     Returns: 
-        Creates a new, clipped raster defined with ``out_raster``.
+        None: Creates a new, clipped raster defined with ``out_raster``.
     """
     gdal.Warp(out_raster, in_raster, cutlineDSName=polygon)

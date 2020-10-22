@@ -8,10 +8,10 @@ def float2int(raster_file_name, band_number=1):
 
     Args:
         raster_file_name (str): Target file name, including directory; must end on ``".tif"``.
-        band_number (int): The raster band number to open (default: 1)
+        band_number (int): The raster band number to open (default=``1``).
 
     Returns:
-        ``str``: ``"path/to/ew_raster_file.tif"``
+        str: ``"path/to/ew_raster_file.tif"``
     """
     
     raster, array, geo_transform = raster2array(raster_file_name, band_number=band_number)
@@ -41,10 +41,10 @@ def raster2line(raster_file_name, out_shp_fn, pixel_value):
     Args:
         raster_file_name (str): of input raster file name, including directory; must end on ``".tif"``.
         out_shp_fn (str): of target shapefile name, including directory; must end on ``".shp"``.
-        pixel_value (``int`` or ``float``): of a pixel value
+        pixel_value (``int`` or ``float``): Pixel values to connect.
 
      Returns:
-         ``None``: Writes new shapefile to disk.
+         None: Writes a new shapefile to disk.
     """
 
     # calculate max. distance between points
@@ -108,7 +108,7 @@ def raster2polygon(file_name, out_shp_fn, band_number=1, field_name="values"):
                           in the shapefiles unit system is calculated - default: ``False``)
 
      Returns:
-         ``osgeo.ogr.DataSource``: Python file object of the provided ``out_shp_fn``.
+         osgeo.ogr.DataSource: Python object of the provided ``out_shp_fn``.
     """
     # ensure that the input raster contains integer values only and open the input raster
     file_name = float2int(file_name)
@@ -148,7 +148,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         field_name (str): Name of the shapefile's field with values to burn to raster pixel values.
 
     Returns:
-        ``None``: Creates the GeoTIFF raster defined with ``out_raster_file_name``.
+        None: Creates the GeoTIFF raster defined with ``out_raster_file_name``.
     """
 
     # check if any action is required

@@ -18,7 +18,7 @@ def create_shp(shp_file_dir, overwrite=True, *args, **kwargs):
         layer_type (str): Either ``"point"``, ``"line"``, or ``"polygon"`` of the ``layer_name``. If ``None``: no layer will be created.
         
     Returns:
-        ``osgeo.ogr.DataSource``: ``ogr`` shapefile
+        osgeo.ogr.DataSource: An ``ogr`` shapefile
     """
     shp_driver = ogr.GetDriverByName("ESRI Shapefile")
     shp_file_dir = verify_shp_name(shp_file_dir)
@@ -61,7 +61,7 @@ def get_geom_description(layer):
         layer (osgeo.ogr.Layer): A shapefile layer.
         
     Returns:
-        ``str``:  WKB (binary) geometry type
+        str:  WKB (binary) geometry type
     """
     type_dict = {0: "wkbUnknown", 1: "wkbPoint", 2: "wkbLineString", 3: "wkbPolygon",
                  4: "wkbMultiPoint", 5: "wkbMultiLineString", 6: "wkbMultiPolygon",
@@ -105,7 +105,7 @@ def get_geom_simplified(layer):
         layer (osgeo.ogr.Layer): A shapefile layer.
        
     Returns:
-        ``str``: Either WKT-formatted point, line, or polygon (or unknown if invalid layer).
+        str: Either WKT-formatted point, line, or polygon (or unknown if invalid layer).
     """
     wkb_geom = get_geom_description(layer)
     if "point" in wkb_geom.lower():
@@ -126,7 +126,7 @@ def verify_shp_name(shp_file_name, shorten_to=13):
         shorten_to (int): The number of characters the shapefile name should have (default=``13``).
     
     Returns:
-        ``str``: A shapefile name (including path if provided) with a length of ``shorten_to``.
+        str: A shapefile name (including path if provided) with a length of ``shorten_to``.
     """
     pure_fn = shp_file_name.split(".shp")[0].split("/")[-1].split("\\")[-1]
     shp_dir = shp_file_name.strip(shp_file_name.split("/")[-1].split("\\")[-1])
@@ -147,7 +147,7 @@ def polygon_from_shapepoints(shapepoints, polygon, alpha=np.nan):
         alpha (float): Coefficient to adjust; the lower it is, the more slim will be the polygon.
     
     Returns:
-        Creates the polygon shapefile defined with ``polygon``.
+        None: Creates the polygon shapefile defined with ``polygon``.
     """
     gdf = geopandas.read_file(shapepoints)
 
