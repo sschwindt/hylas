@@ -40,3 +40,7 @@ search:
      - 404.html
      # Ignore all files under the search/ directory
      - docs/*
+
+# Enable submodules
+submodules:
+  include: all
