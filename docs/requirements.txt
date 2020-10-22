@@ -29,4 +29,8 @@ pandas
 geopandas
 numpy
 shapely
+gdal-bin
+libgdal
+libgdal-dev
 gdal
+

@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-HYLAS USER GUIDE
-================
+HYLAS - USER GUIDE
+==================
 
 .. toctree::
     :maxdepth: 4
