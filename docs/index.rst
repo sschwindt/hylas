@@ -124,6 +124,17 @@ Clone the *hylas* repository in the new folder:
 .. note::
    Cloning the repository creates a new sub-folder. So if you want to work directly in your home folder, skip the ``mkdir`` + ``cd`` commands.
 
+Upgrade Python libraries
+------------------------
+
+In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) required Python packages:
+
+.. code:: console
+
+   $ pip3 freeze requirements.txt
+   $ pip3 install -r requirements.txt --upgrade
+
+
 
 Get ready with *PyCharm*
 -------------------------
