@@ -33,7 +33,7 @@ search:
      /*: -5
    ignore:
      - 404.html
-     # Ignore all files under the search/ directory
+     # ignore all files in the docs/ directory
      - docs/*
 
 # Enable submodules

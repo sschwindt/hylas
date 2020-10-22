@@ -48,7 +48,7 @@ Open *Terminal*  and update the system:
 
 
 Update Python references
----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: console
 
@@ -67,7 +67,8 @@ Now set the ``python`` environment variable so that it points at *Python3*:
 
 
 Additional libraries for geospatial analysis
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
 
 .. code:: console
@@ -77,9 +78,8 @@ Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://h
    $ sudo apt install libgeos-dev
 
 
-
 Install PIP3 and Python libraries
----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Then install: ``pip3``:
 
@@ -104,10 +104,10 @@ Clean up obsolete update remainders:
 
 
 Get ready with hylas (install)
-==============================
+------------------------------
 
 Clone hylas
-------------
+^^^^^^^^^^^^
 
 Open *Terminal*, create a project folder and ``cd`` to the project folder:
 
@@ -126,7 +126,7 @@ Clone the *hylas* repository in the new folder:
    Cloning the repository creates a new sub-folder. So if you want to work directly in your home folder, skip the ``mkdir`` + ``cd`` commands.
 
 Upgrade Python libraries
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) required Python packages:
 
@@ -137,8 +137,8 @@ In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) requir
 
 
 
-Get ready with *PyCharm*
--------------------------
+Get ready with an IDE (*PyCharm*)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. note:: IDE - your choice
    Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option for working with *hylas*.
@@ -160,8 +160,62 @@ Application
 Basic usage
 -----------
 
+To convert a *las* file to an ESRI shapefile or GeoTIFF, load *hylas* in Python from the directory where you downloaded (cloned) *hylas*:
+
+.. code-block:: python
+
+   import hylas
+   las_file_name = "path/to/a/las-file.las"
+   methods = ["las2shp", "las2tif"]
+   hylas.process_file(las_file_name, epsg=3857, methods=methods)
+
+
+The above code block defines a ``las_file_name`` variable and ``methods`` to be used with ``hylas.process_file`` (see :ref:`hylas-code`). The function accepts many more optional arguments:
+
+.. automodule:: hylas.process_file
+   :special-members:
+
+.. note::
+   The ``LasPoint`` class (see :ref:`las-point-code`) can also be directly called in any script with ``hylas.LasPoint``. Have a look at the ``hylas.process_file`` function (:ref:`hylas-code`) to see how an instance of the ``LasPoint`` class is used.
+
+Application example
+-------------------
+
+The file ``ROOT/test.py`` provides and example for using ``hylas`` with a las-file stored in a new folder ``ROOT/data``:
+
+.. code-block:: python
+   import hylas
+   import os
+
+   las_file_name = os.path.abspath("") + "/data/las-example.las"
+   shp_file_name = os.path.abspath("") + "/data/example.shp"
+   epsg = 25832
+   methods = ["las2tif"]
+   attribs = "aci"
+   px_size = 2
+   tif_prefix = os.path.abspath("") + "/data/sub"
+
+   hylas.process_file(las_file_name,
+                      epsg=epsg,
+                      methods=methods,
+                      extract_attributes=attribs,
+                      pixel_size=px_size,
+                      shapefile_name=shp_file_name,
+                      tif_prefix=tif_prefix)
+
+
+.. note::
+   The method ``las2tif`` automatically calls the ``las2shp`` (``hylas.LasPoint.export2shp``) method because the GeoTIFF pixel values are extracted from the attribute table of the point shapefile. So ``las2shp`` is the baseline for any other operation.
+
+Geo-utils
+---------
+
+The ``geo_utils`` package is forked from `hydro-informatics <https://github.com/hydro-informatics/geo-utils>`_ on *GitHub* to enable creating correctly geo-referenced GeoTIFF rasters (``rasterize`` function - see :ref:`geo-utils-code`).
+
 Package functions, classes, and methods
 =======================================
+
+.. _hylas-code:
 
 The main file: hylas.py
 -----------------------
@@ -183,12 +237,16 @@ Global functions: helpers.py
 .. automodule:: helpers
    :members:
 
+.. _las-point-code:
+
 The ``LasPoint`` class
 -----------------------
 
 .. autoclass:: LasPoint.LasPoint
    :members:
    :private-members:
+
+.. _geo-utils-code:
 
 ``geo_utils`` (MASTER: geo_utils.py)
 ------------------------------------
