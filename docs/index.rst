@@ -182,35 +182,28 @@ The ``LasPoint`` class
    :members:
    :private-members:
 
-geo_utils
------------------------
-
+``geo_utils`` (MASTER: geo_utils.py)
+------------------------------------
 .. automodule:: geo_utils.geo_utils
    :members:
 
-hylas geo_utils geoconfig
----------------------------------------
-
-.. automodule:: /geo_utils.*
+``geo_utils`` raster management (dataset_mgmt.py)
+-------------------------------------------------
+.. automodule:: geo_utils.raster_mgmt
    :members:
 
-hylas geo_utils Raster Management
----------------------------------------
-.. automodule:: geo_utils.raster_mgmt.*
-   :members:
-
-hylas geo_utils Shapefile Management
----------------------------------------
+``geo_utils`` shapefile management (shp_mgmt.py)
+------------------------------------------------
 .. automodule:: geo_utils.shp_mgmt
    :members:
 
-hylas geo_utils Projection Management
----------------------------------------
+``geo_utils`` projection management (srs_mgmt.py)
+-------------------------------------------------
 .. automodule:: geo_utils.srs_mgmt
    :members:
 
-hylas geo_utils Dataset Conversion
----------------------------------------
+``geo_utils`` dataset Conversion (dataset_mgmt.py)
+--------------------------------------------------
 .. automodule:: geo_utils.dataset_mgmt
    :members:
 

@@ -58,10 +58,10 @@ def get_geom_description(layer):
     """Gets the WKB Geometry Type as string from a shapefile layer.
     
     Args:
-        layer (osgeo.ogr.Layer):
+        layer (osgeo.ogr.Layer): A shapefile layer.
         
     Returns:
-        str:  wkbGEOMETRY-TYPE
+        ``str``:  WKB (binary) geometry type
     """
     type_dict = {0: "wkbUnknown", 1: "wkbPoint", 2: "wkbLineString", 3: "wkbPolygon",
                  4: "wkbMultiPoint", 5: "wkbMultiLineString", 6: "wkbMultiPolygon",
@@ -98,14 +98,14 @@ def get_geom_description(layer):
 
 
 def get_geom_simplified(layer):
-    """Gets a simplified geometry description (either point, line, or polygon) as a function of
+    r"""Gets a simplified geometry description (either point, line, or polygon) as a function of
      the WKB Geometry Type of a shapefile layer.
          
     Args:
         layer (osgeo.ogr.Layer): A shapefile layer.
        
     Returns:
-        str: Either WKT-formatted point, line, or polygon (or unknown if invalid layer).
+        ``str``: Either WKT-formatted point, line, or polygon (or unknown if invalid layer).
     """
     wkb_geom = get_geom_description(layer)
     if "point" in wkb_geom.lower():
@@ -118,19 +118,19 @@ def get_geom_simplified(layer):
 
 
 def verify_shp_name(shp_file_name, shorten_to=13):
-    """Ensure thats the shapefile name does not exceed 13 characters. Otherwise, the function shortens the ``shp_file_name`` length
+    """Ensure that the shapefile name does not exceed 13 characters. Otherwise, the function shortens the ``shp_file_name`` length
     to N characters.
-    
         
     Args:
-        shp_file_name (str): of a shapefile name (with directory e.g., "C:/temp/poly.shp")
-        shorten_to (int): of the number of characters the shapefile name should have (default=``13``)
+        shp_file_name (str): A shapefile name (with directory e.g., ``"C:/temp/poly.shp"``).
+        shorten_to (int): The number of characters the shapefile name should have (default=``13``).
     
     Returns:
-        str: A shapefile name (including path if provided) with a length of ``shorten_to``.
+        ``str``: A shapefile name (including path if provided) with a length of ``shorten_to``.
     """
     pure_fn = shp_file_name.split(".shp")[0].split("/")[-1].split("\\")[-1]
     shp_dir = shp_file_name.strip(shp_file_name.split("/")[-1].split("\\")[-1])
+
     if pure_fn.__len__() > shorten_to:
         print("Shapefile name too long (applying auto-shortening to %s characters)." % str(shorten_to))
         return shp_dir + pure_fn[0: shorten_to - 1] + ".shp"
@@ -147,7 +147,7 @@ def polygon_from_shapepoints(shapepoints, polygon, alpha=np.nan):
         alpha (float): Coefficient to adjust; the lower it is, the more slim will be the polygon.
     
     Returns:
-        Create the polygon shapefile defined with ``polygon``.
+        Creates the polygon shapefile defined with ``polygon``.
     """
     gdf = geopandas.read_file(shapepoints)
 

@@ -51,7 +51,7 @@ def process_file(source_file_name, epsg, **opts):
                     "pixel_size": 1.0,
                     }
 
-    for k in default_keys.values():
+    for k in default_keys.keys():
         if opts.get(k):
             default_keys[k] = opts.get(k)
 
@@ -60,12 +60,12 @@ def process_file(source_file_name, epsg, **opts):
                           use_attributes=default_keys["extract_attributes"],
                           overwrite=default_keys["overwrite"])
 
-    if "las2shp" in default_keys["methods"]:
+    if "las2shp" in default_keys["methods"] or not os.path.isfile(default_keys["shapefile_name"]):
         las_object.export2shp(shapefile_name=default_keys["shapefile_name"])
 
     if not os.path.isfile(default_keys["shapefile_name"]):
-        logging.warning("No shapefile %s found. Cannot continue." % default_keys["shapefile_name"])
-        return -1
+        logging.warning("Shapefile %s not found. Cannot continue." % default_keys["shapefile_name"])
+        return False
     else:
         logging.info(" * Using %s to create GeoTIFF(s)." % default_keys["shapefile_name"])
 
@@ -77,3 +77,4 @@ def process_file(source_file_name, epsg, **opts):
                                 pixel_size=default_keys["pixel_size"],
                                 field_name=wattr[attr],
                                 overwrite=default_keys["overwrite"])
+    return True
