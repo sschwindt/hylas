@@ -22,8 +22,8 @@ def is_development_build():
 
 
 sys.path.insert(0, os.path.abspath('..'))
-sys.setrecursionlimit(1500)
-sys.path.append(os.path.abspath('./geo_utils/'))
+#sys.setrecursionlimit(1500)
+sys.path.append(os.path.abspath('..') + '/geo_utils')
 
 autodoc_mock_imports = ['hylas', 'geo_utils']
 import sphinx_rtd_theme
