@@ -2,7 +2,6 @@
 
 import sys
 import os
-import mock
 import re
 import datetime
 
@@ -23,7 +22,6 @@ def is_development_build():
 
 
 sys.path.insert(0, os.path.abspath('..'))
-#sys.setrecursionlimit(1500)
 sys.path.append(os.path.abspath('..') + '/geo_utils')
 
 # the following modules will be mocked (i.e. bogus imports - required for C-dependent packages)
@@ -47,6 +45,9 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
+    'sphinx.ext.githubpages',
+    'sphinx.ext.todo',
+    'sphinx_thebe',
     'sphinx_rtd_theme'
 ]
 
@@ -71,12 +72,16 @@ html_theme_options = {
     'navigation_depth': 5,
     'canonical_url': '',
     'display_version': True,
+    'launch_buttons': {
+                        'binderhub_url': 'https://mybinder.org',
+                        'thebe': True,
+                        'collapse_navigation': False},
     'prev_next_buttons_location': 'bottom',
     'style_external_links': False,
     'vcs_pageview_mode': '',
-    'style_nav_header_background': 'white',
+    'style_nav_header_background': '#2a5c7d',
     # Toc options
-    'collapse_navigation': False,
+    'collapse_navigation': True,
     'sticky_navigation': False,
     'includehidden': -1,
     'titles_only': False
@@ -84,7 +89,11 @@ html_theme_options = {
 
 html_context = {
     'author': 'Sebastian Schwindt',
-    'date': datetime.date.today().strftime('%Y-%m-%d')
+    'date': datetime.date.today().strftime('%Y-%m-%d'),
+    'display_github': True,
+    'github_user': 'sschwindt',
+    'github_repo': 'hylas',
+    'github_version': 'main/',
 }
 
 if not 'READTHEDOCS' in os.environ:
