@@ -20,7 +20,7 @@ Detect object size and types from airborne lidar data with the *hylas* Python3 p
 .. note::
     This documentation is also as available as style-adapted PDF (`download <https://hylas.readthedocs.io/_/downloads/en/latest/pdf/>`_).
 
-Requirements
+Installation
 ============
 
 Linux (Debian/Ubuntu)
@@ -29,7 +29,7 @@ Linux (Debian/Ubuntu)
 Optional: Use a Virtual Machine (VM)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `*OSGeoLive* <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. After the main installation, make sure to:
+Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `OSGeoLive <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. After the main installation, make sure to:
 
 * `install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
 * `enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image)
@@ -68,7 +68,7 @@ Now set the ``python`` environment variable so that it points at *Python3*:
 Additional libraries for geospatial analysis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `*geopandas* <https://geopandas.org/>`_:
+Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `geopandas <https://geopandas.org/>`_:
 
 .. code:: console
 
@@ -199,34 +199,33 @@ Clone the *hylas* repository in the new folder:
    Cloning the repository creates a new sub-folder. So if you want to work directly in your home folder, skip the ``mkdir`` + ``cd`` commands.
 
 
-Get ready with an IDE (*PyCharm*)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Setup an IDE (*PyCharm*)
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Start *PyCharm* and create a new project from the ``hylas`` repository:
 
 * Open *PyCharm*, click on ``+ Create New Project`` and select the directory where you cloned *hylas* (e.g., ``/ROOT/git/hylas``).
 * Define a *Project Interpreter* depending on if you use *Linux / pip3* or *Windows / *Anaconda*. So choose ``New`` > ``Add Python Interpreter``
 
-**LINUX / PIP3 USERS**
+.. admonition:: LINUX / PIP3 USERS
 
-Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable when you are working on a VM.
+   Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable when you are working on a VM.
 
-**WINDOWS / ANACONDA USERS**
+
 
 .. admonition:: WINDOWS / ANACONDA USERS
 
-   Enable the *View hidden folders* option to see the ``AppData`` folder in *Windows Explorer*. *Microsoft* explains how this works on their `support website <https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files>`_. Then, you can copy-paste folder directories from *Windows Explorer* to *PyCharm*.
+   * Enable the *View hidden folders* option to see the ``AppData`` folder in *Windows Explorer*. *Microsoft* explains how this works on their `support website <https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files>`_. Then, you can copy-paste folder directories from *Windows Explorer* to *PyCharm*.
+   * Identify the system path where the conda environment (e.g. ``ipy-hylas``) lives. Typically, this is something like ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas`` . Then, in the **Add Python Interpreter** window, go to the *Conda Environment* tab, select *New environment*, and make the following settings:
 
-Identify the system path where the conda environment (e.g. ``ipy-hylas``) lives. Typically, this is something like ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas`` . Then, in the **Add Python Interpreter** window, go to the *Conda Environment* tab, select *New environment*, and make the following settings:
+      * Location: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas``
+      * Python version: ``3.8``
+      * Conda executable: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\bin\conda``
 
-* Location: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas``
-* Python version: ``3.8``
-* Conda executable: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\bin\conda``
-
-There is also a detailed tutorial for setting up *PyCharm* with *Anaconda* available at `docs.anaconda.com <https://docs.anaconda.com/anaconda/user-guide/tasks/pycharm/>`_.
+   There is also a detailed tutorial for setting up *PyCharm* with *Anaconda* available at `docs.anaconda.com <https://docs.anaconda.com/anaconda/user-guide/tasks/pycharm/>`_.
 
 
-Application
+Usage
 ===========
 
 Basic usage
@@ -321,33 +320,36 @@ The ``LasPoint`` class
 
 .. _geo-utils-code:
 
-``geo_utils`` (MASTER: geo_utils.py)
-------------------------------------
+geo_utils
+---------
+
+geo_utils (MASTER: geo_utils.py)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.geo_utils
    :members:
 
-``geo_utils`` raster management (dataset_mgmt.py)
--------------------------------------------------
+geo_utils raster management (dataset_mgmt.py)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.raster_mgmt
    :members:
 
-``geo_utils`` shapefile management (shp_mgmt.py)
-------------------------------------------------
+geo_utils shapefile management (shp_mgmt.py)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.shp_mgmt
    :members:
 
-``geo_utils`` projection management (srs_mgmt.py)
--------------------------------------------------
+geo_utils projection management (srs_mgmt.py)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.srs_mgmt
    :members:
 
-``geo_utils`` dataset Conversion (dataset_mgmt.py)
---------------------------------------------------
+geo_utils dataset Conversion (dataset_mgmt.py)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.dataset_mgmt
    :members:
 
 
-DEVELOPERS (CONTRIBUTE)
+Contribute (developers)
 =======================
 
 How to document hylas
