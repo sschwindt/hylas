@@ -4,4 +4,6 @@ geopandas
 laspy
 numpy
 pandas
+rasterstats
+scikit-image
 shapely

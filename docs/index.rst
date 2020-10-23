@@ -17,25 +17,24 @@ HYLAS - USER GUIDE
 
 Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this workflow to setup the working environment.
 
+.. note::
+    This documentation is also as available as style-adapted PDF (`download <https://hylas.readthedocs.io/_/downloads/en/latest/pdf/>`_).
+
 Requirements
 ============
 
-Get ready with OSGeoLive VM
----------------------------
+Linux (Debian/Ubuntu)
+---------------------
 
-Install *OSGeoLive* `download ISO image <http://live.osgeo.org/en/download.html>`_ as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. Afterwards, make sure to:
+Optional: Use a Virtual Machine (VM)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `*OSGeoLive* <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. After the main installation, make sure to:
 
 * `install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
-* `enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*OSGeoLive* image)
+* `enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image)
 
-The other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
-
-.. note::
-   As an alternative to the *OSGeoLive* VM, get *libLAS* for your operating system (OS):
-          * On *Linux* install `Debian GIS <https://wiki.debian.org/DebianGis>`_ or try the *Live Image* on a `Virtual Machine <https://hydro-informatics.github.io/vm.>`_
-          * On *Windows* install *libLAS* through *OSGeo4W* (`see detailed instructions <https://liblas.org/osgeo4w.>`_)
-
-The following instructions refer to the usage of the *OSGeoLive* VM.
+Other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
 Prepare your system
 ^^^^^^^^^^^^^^^^^^^
@@ -102,6 +101,80 @@ Clean up obsolete update remainders:
    $ sudo apt-get autoremove
    $ sudo apt-get autoremove --purge
 
+Upgrade Python libraries
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) required Python packages:
+
+.. code:: console
+
+   $ pip3 freeze requirements.txt
+   $ pip3 install -r requirements.txt --upgrade
+
+Install an IDE (*PyCharm*)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: IDE - your choice
+   Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option for working with *hylas*.
+
+Install *PyCharm* if not yet done (requires snap):
+
+.. code:: console
+
+   $ sudo apt install snapd
+   $ sudo snap install pycharm-community --classic
+
+
+Windows
+-------
+
+Required software
+^^^^^^^^^^^^^^^^^
+On *Windows*, a convenient option for working with *hylas* is to use a conda environment. In addition, *GitBash* is necessary to clone (download) *hylas* (and to keep posted on updates). In detail:
+
+* Install *Anaconda*, for example as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/hy_ide.html#anaconda>`_.
+* `Download <https://git-scm.com/downloads>`_ and install *GitBash*.
+
+Create a conda environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Then open *Anaconda Prompt* and create a new environment (e.g., ``ipy-hylas``):
+
+.. code:: console
+
+   $ conda env create --name ipy-hylas python=3.8
+
+Then, activate the new environment:
+
+.. code:: console
+
+   $ conda activate ipy-hylas
+
+Install the required Python libraries in the new environment:
+
+.. code:: console
+
+   $ conda update conda
+   $ conda install -c anaconda numpy
+   $ conda install -c anaconda pandas
+   $ conda install -c conda-forge gdal
+   $ conda install -c conda-forge shapely
+   $ conda install -c conda-forge alphashape
+   $ conda install -c conda-forge rasterstats
+   $ conda install -c anaconda scikit-image
+   $ conda install -c conda-forge geopandas
+   $ conda install -c conda-forge laspy
+
+
+There are more compact ways to setup the conda environment (e.g., using an environment file). To read more about conda environments go to `hydro-informatics.github.io <https://hydro-informatics.github.io/hypy_install.html#conda-env>`_.
+
+Install an IDE (*PyCharm*)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note:: IDE - your choice
+   Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option for working with *hylas*.
+
+`Download <https://www.jetbrains.com/pycharm/>`_  and install *PyCharm Community Edition*. Read more at `hydro-informatics.github.io <https://hydro-informatics.github.io/hy_ide.html#pycharm>`_.
 
 Get ready with hylas (install)
 ------------------------------
@@ -109,7 +182,7 @@ Get ready with hylas (install)
 Clone hylas
 ^^^^^^^^^^^^
 
-Open *Terminal*, create a project folder and ``cd`` to the project folder:
+Open *Terminal* (or *Anaconda Prompt*), create a project folder and ``cd`` to the project folder:
 
 .. code:: console
 
@@ -125,34 +198,33 @@ Clone the *hylas* repository in the new folder:
 .. note::
    Cloning the repository creates a new sub-folder. So if you want to work directly in your home folder, skip the ``mkdir`` + ``cd`` commands.
 
-Upgrade Python libraries
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) required Python packages:
-
-.. code:: console
-
-   $ pip3 freeze requirements.txt
-   $ pip3 install -r requirements.txt --upgrade
-
-
 
 Get ready with an IDE (*PyCharm*)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note:: IDE - your choice
-   Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option for working with *hylas*.
+Start *PyCharm* and create a new project from the ``hylas`` repository:
 
-Install *PyCharm* if not yet done (requires snap):
+* Open *PyCharm*, click on ``+ Create New Project`` and select the directory where you cloned *hylas* (e.g., ``/ROOT/git/hylas``).
+* Define a *Project Interpreter* depending on if you use *Linux / pip3* or *Windows / *Anaconda*. So choose ``New`` > ``Add Python Interpreter``
 
-.. code:: console
+**LINUX / PIP3 USERS**
 
-   $ sudo apt install snapd
-   $ sudo snap install pycharm-community --classic
+Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable when you are working on a VM.
 
+**WINDOWS / ANACONDA USERS**
 
-Start *PyCharm* and create a new project from the ``hylas`` repository.
-Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable because we are working on a VM.
+.. admonition:: WINDOWS / ANACONDA USERS
+
+   Enable the *View hidden folders* option to see the ``AppData`` folder in *Windows Explorer*. *Microsoft* explains how this works on their `support website <https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files>`_. Then, you can copy-paste folder directories from *Windows Explorer* to *PyCharm*.
+
+Identify the system path where the conda environment (e.g. ``ipy-hylas``) lives. Typically, this is something like ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas`` . Then, in the **Add Python Interpreter** window, go to the *Conda Environment* tab, select *New environment*, and make the following settings:
+
+* Location: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas``
+* Python version: ``3.8``
+* Conda executable: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\bin\conda``
+
+There is also a detailed tutorial for setting up *PyCharm* with *Anaconda* available at `docs.anaconda.com <https://docs.anaconda.com/anaconda/user-guide/tasks/pycharm/>`_.
+
 
 Application
 ===========
