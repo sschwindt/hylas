@@ -1,5 +1,5 @@
-"""`geo_utils <https://geo-utils.readthedocs.io>`_ is a package for creating,
- modifying, and transforming geo-spatial datasets."""
+"""``geo_utils`` is a package for creating, modifying, and transforming geo-spatial datasets.
+ A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_."""
 from .srs_mgmt import *
 import itertools
 gdal.UseExceptions()

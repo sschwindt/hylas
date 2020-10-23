@@ -334,7 +334,6 @@ The ``LasPoint`` class
 geo_utils
 ---------
 
-``geo_utils`` is a package for creating, modifying, and transforming geo-spatial datasets. A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_.
 
 geo_utils MASTER (geo_utils.py)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
