@@ -8,8 +8,10 @@ def lookup_epsg(file_name):
     Args:
         file_name (str): file name  or other string with words separated by "-" or "_"
 
-    Note:
-        Opens a google search in the default web browser.
+    Notes:
+        Opens a google search in the default web browser. More information about
+        projections, spatial reference systems, and coordinate systems can be obtained with the
+        `geo_utils <https://geo-utils.readthedocs.io>`_ package.
     """
     search_string = file_name.replace("_", "+").replace(".", "+").replace("-", "+")
     google_qry = "https://www.google.com/?#q=projection+crs+epsg+"
