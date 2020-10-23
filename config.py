@@ -61,7 +61,7 @@ pattr = {
         }
 """``dict``: ``dict`` of attributes to extract data layers (shapefile columns or multiple GeoTIFFs) from a las file.
 
-All attributes defined in pattr.values() must be an attribute of a las_file object.
+All attributes defined in ``pattr.values()`` must be an attribute of a las_file object.
 Print all available las file attributes with:
 
 .. code-block:: python

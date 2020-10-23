@@ -25,7 +25,7 @@ def dict2str(dictionary, **kwargs):
         dictionary (dict): A dictionary to convert to a string.
 
     Keyword Args:
-        inverse_dict(boolean): Apply inverse order of string (default=``False``).
+        inverse_dict(boolean): Apply inverse order of string (default: ``False``).
 
     Returns:
         str: The dictionary as flattened text.

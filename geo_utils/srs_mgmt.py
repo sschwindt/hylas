@@ -119,8 +119,8 @@ def reproject(source_dataset, new_projection_dataset):
         new_projection_dataset (gdal.Dataset): Shapefile or raster with new projection info.
         
     Returns:
-        If the source is a raster: Creates a GeoTIFF in same directory as ``source_dataset`` with a ``"_reprojected"`` suffix in the file name.
-        If the source is a shapefile: Creates a shapefile in same directory as ``source_dataset`` with a ``"_reprojected"`` suffix in the file name.
+        * If the source is a raster, the function creates a GeoTIFF in same directory as ``source_dataset`` with a ``"_reprojected"`` suffix in the file name.
+        * If the source is a shapefile, the function creates a shapefile in same directory as ``source_dataset`` with a ``"_reprojected"`` suffix in the file name.
     """
 
     # get source and target spatial reference systems

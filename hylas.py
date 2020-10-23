@@ -35,7 +35,7 @@ def process_file(source_file_name, epsg, **opts):
     Keyword Args:
         create_dem (bool): default: False - set to True for creating a digital elevation model (DEM)
         extract_attributes (str): Attributes to extract from the las-file available in pattr (config.py)
-        methods(`list` [`str`]): Enabled list strings are las2shp, las2tif, shp2tif
+        methods(`list` [`str`]): Enabled list strings are las2shp, las2tif, shp2tif, las2dem
         overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
         pixel_size (float): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
         shapefile_name (str): Name of the point shapefile to produce with las2*
@@ -66,11 +66,9 @@ def process_file(source_file_name, epsg, **opts):
     if "las2shp" in default_keys["methods"] or not os.path.isfile(default_keys["shapefile_name"]):
         las_object.export2shp(shapefile_name=default_keys["shapefile_name"])
 
-    if not os.path.isfile(default_keys["shapefile_name"]):
-        logging.warning("Shapefile %s not found. Cannot continue." % default_keys["shapefile_name"])
-        return False
-    else:
-        logging.info(" * Using %s to create GeoTIFF(s)." % default_keys["shapefile_name"])
+    if "las2dem" in "".join(default_keys["methods"]):
+        las_object.create_dem(target_file_name=default_keys["tif_prefix"] + "_dem.tif",
+                              pixel_size=default_keys["pixel_size"])
 
     if "2tif" in "".join(default_keys["methods"]):
         logging.info(" * Creating GeoTIFFs ...")

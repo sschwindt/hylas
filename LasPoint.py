@@ -41,14 +41,38 @@ class LasPoint:
     def __repr__(self):
         return "%s" % self.__class__.__name__
 
+    def create_dem(self, target_file_name="", pixel_size=1.0, overwrite=True):
+        """Creates a digital elevation model (DEM) in GeoTIFF format from the *las* file points.
+
+        Args:
+            target_file_name (str): A file name including an existing directory where the dem  will be created< must end on ``.tif``.
+            pixel_size (float): The size of one pixel relative to the spatial reference system.
+
+        Hint:
+            This function works independently and does not require the prior creation of a shapefile.
+
+        Returns:
+            int: ``0`` if successful, otherwise ``-1``
+        """
+        logging.info(" * Creating GeoTIFF DEM %s ..." % target_file_name)
+
+        dem_array = np.array(self.las_file.x,
+                             self.las_file.y,
+                             self.las_file.z)
+
+        geo_utils.create_raster(file_name=target_file_name,
+                                raster_array=dem_array,
+                                geo_info=self.srs)
+        return 0
+
     def export2shp(self, **kwargs):
-        r"""Converts las file points to a point shapefile.
+        """Converts las file points to a point shapefile.
 
         Keyword Args:
-            shapefile_name (:obj:`str`, optional): Optional shapefile name (must end on .shp).
+            shapefile_name (`str`): Optional shapefile name (must end on .shp).
                                         (default: ``'/this/dir/las_file_name.shp'``).
         Returns:
-            str: ``/path/to/shapefile.shp``
+            str: ``/path/to/shapefile.shp``, which is a point shapefile created by the function.
         """
         if kwargs.get("shapefile_name"):
             shapefile_name = kwargs.get("shapefile_name")
