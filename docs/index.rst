@@ -15,9 +15,19 @@ hylas
 
 .. moduleauthor:: Sebastian Schwindt <sebastian.schwindtATiws.uni-stuttgart.de>
 
-Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the installation workflow described for setting up the working environment.
+*hylas* extracts geo-spatial information from *las* files and converts them to ESRI shapefiles or GeoTIFF rasters. *las* is the typical file format for storing airborne lidar (`Light Detection and Ranging <https://oceanservice.noaa.gov/facts/lidar.html>`_) data. *hylas* is a *Python3* package and this documentation uses a *Sphinx* *readthedocs* theme. The functional core of *hylas* involves the creation of:
 
-.. admonition:: Get *hylas* docs as PDF
+* A point shapefile with user-defined point attributes such as *intensity*, *waveform*, or *nir*.
+* *GeoTIFF* rasters with user-defined resolution (pixel size) for any attribute of a *las* file (e.g., *intensity*, *waveform*, or *nir*).
+
+.. admonition:: todo
+
+   * Digital elevation model (DEM) with user-defined resolution (pixel size).
+
+
+To ensure the best experience with *hylas* and its useful functions, follow the *Installation* instructions for setting up the working environment either on *Linux* or on *Windows*.
+
+.. admonition:: Get the *hylas* docs as PDF
 
     This documentation is also as available as a style-adapted PDF (`download <https://hylas.readthedocs.io/_/downloads/en/latest/pdf/>`_).
 
