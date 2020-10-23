@@ -15,10 +15,10 @@ HYLAS - USER GUIDE
 
 .. moduleauthor:: Sebastian Schwindt <sebastian.schwindtATiws.uni-stuttgart.de>
 
-Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this workflow to setup the working environment.
+Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this workflow to set up the working environment.
 
 .. note::
-    This documentation is also as available as style-adapted PDF (`download <https://hylas.readthedocs.io/_/downloads/en/latest/pdf/>`_).
+    This documentation is also as available as a style-adapted PDF (`download <https://hylas.readthedocs.io/_/downloads/en/latest/pdf/>`_).
 
 Installation
 ============
@@ -29,10 +29,10 @@ Linux (Debian/Ubuntu)
 Optional: Use a Virtual Machine (VM)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `OSGeoLive <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similarly as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. After the main installation, make sure to:
+Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `OSGeoLive <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similar, as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. After the main installation, make sure to:
 
 * `install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
-* `enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image)
+* `Enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image)
 
 Other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
 
@@ -117,7 +117,7 @@ Install an IDE (*PyCharm*)
 .. note:: IDE - your choice
    Any other Python IDE is also OK for working with *hylas*. Setting up PyCharm is explained here as just one option for working with *hylas*.
 
-Install *PyCharm* if not yet done (requires snap):
+Install *PyCharm* with snap (requires snap):
 
 .. code:: console
 
@@ -132,7 +132,7 @@ Required software
 ^^^^^^^^^^^^^^^^^
 On *Windows*, a convenient option for working with *hylas* is to use a conda environment. In addition, *GitBash* is necessary to clone (download) *hylas* (and to keep posted on updates). In detail:
 
-* Install *Anaconda*, for example as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/hy_ide.html#anaconda>`_.
+* Install *Anaconda*, for example, as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/hy_ide.html#anaconda>`_.
 * `Download <https://git-scm.com/downloads>`_ and install *GitBash*.
 
 Create a conda environment
@@ -182,7 +182,7 @@ Get ready with hylas (install)
 Clone hylas
 ^^^^^^^^^^^^
 
-Open *Terminal* (or *Anaconda Prompt*), create a project folder and ``cd`` to the project folder:
+Open *Terminal* (or *Anaconda Prompt*), create a project folder, and ``cd`` to the project folder:
 
 .. code:: console
 
@@ -216,7 +216,8 @@ Start *PyCharm* and create a new project from the ``hylas`` repository:
 .. admonition:: WINDOWS / ANACONDA USERS
 
    * Enable the *View hidden folders* option to see the ``AppData`` folder in *Windows Explorer*. *Microsoft* explains how this works on their `support website <https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files>`_. Then, you can copy-paste folder directories from *Windows Explorer* to *PyCharm*.
-   * Identify the system path where the conda environment (e.g. ``ipy-hylas``) lives. Typically, this is something like ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas`` . Then, in the **Add Python Interpreter** window, go to the *Conda Environment* tab, select *New environment*, and make the following settings:
+   * Identify the system path where the conda environment (e.g. ``ipy-hylas``) lives. Typically, this is something like ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas`` .
+   * In the **Add Python Interpreter** window, go to the *Conda Environment* tab, select *New environment*, and make the following settings:
 
       * Location: ``C:\users\<your-user-name>\AppData\Local\Continuum\anaconda3\envs\ipy-hylas``
       * Python version: ``3.8``
@@ -284,8 +285,8 @@ Geo-utils
 
 The ``geo_utils`` package is forked from `hydro-informatics <https://github.com/hydro-informatics/geo-utils>`_ on *GitHub* to enable creating correctly geo-referenced GeoTIFF rasters (``rasterize`` function - see :ref:`geo-utils-code`).
 
-Package functions, classes, and methods
-=======================================
+Code documentation
+==================
 
 .. _hylas-code:
 
@@ -323,7 +324,7 @@ The ``LasPoint`` class
 geo_utils
 ---------
 
-geo_utils (MASTER: geo_utils.py)
+geo_utils MASTER (geo_utils.py)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.geo_utils
    :members:
@@ -425,4 +426,3 @@ Indices and tables
 * :ref:``genindex``
 * :ref:``modindex``
 * :ref:``search``
-
