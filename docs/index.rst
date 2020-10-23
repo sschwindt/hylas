@@ -34,7 +34,7 @@ To ensure the best experience with *hylas* and its useful functions, follow the 
 Installation
 ============
 
-Linux (Debian/Ubuntu)
+LINUX (Debian/Ubuntu)
 ---------------------
 
 Optional: Use a Virtual Machine (VM)
@@ -136,7 +136,7 @@ Install *PyCharm* with snap (requires snap):
    $ sudo snap install pycharm-community --classic
 
 
-Windows
+WINDOWS
 -------
 
 Required software
@@ -187,8 +187,8 @@ Install an IDE (*PyCharm*)
 
 `Download <https://www.jetbrains.com/pycharm/>`_  and install *PyCharm Community Edition*. Read more at `hydro-informatics.github.io <https://hydro-informatics.github.io/hy_ide.html#pycharm>`_.
 
-Get ready with hylas (install)
-------------------------------
+GET HYLAS
+---------
 
 Clone hylas
 ^^^^^^^^^^^^
@@ -293,7 +293,10 @@ The file ``ROOT/test.py`` provides and example for using ``hylas`` with a las-fi
 Geo-utils
 ---------
 
-The ``geo_utils`` package is forked from `hydro-informatics <https://github.com/hydro-informatics/geo-utils>`_ on *GitHub* to enable creating correctly geo-referenced GeoTIFF rasters (``rasterize`` function - see :ref:`geo-utils-code`).
+The ``geo_utils`` package is forked from `hydro-informatics <https://github.com/hydro-informatics/geo-utils>`_ on *GitHub*. ``geo_utils`` provides routines for creating, modifying, and transforming geo-spatial datasets. A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_."""
+
+
+to enable creating correctly geo-referenced GeoTIFF rasters (``rasterize`` function - see :ref:`geo-utils-code`).
 
 Code documentation
 ==================

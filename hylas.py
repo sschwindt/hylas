@@ -4,14 +4,16 @@ import webbrowser
 
 
 def lookup_epsg(file_name):
-    """Starts a google search to retrieve information from a file name (or other ``str``) with information such as *UTM32*.
+    """Starts a google search to retrieve information from a file name (or other ``str``)
+    with information such as *UTM32*.
+
     Args:
         file_name (str): file name  or other string with words separated by "-" or "_"
 
     Notes:
-        Opens a google search in the default web browser. More information about
-        projections, spatial reference systems, and coordinate systems can be obtained with the
-        `geo_utils <https://geo-utils.readthedocs.io>`_ package.
+        * This function opens a google search in the default web browser.
+        * More information about projections, spatial reference systems, and coordinate systems
+         can be obtained with the `geo_utils <https://geo-utils.readthedocs.io>`_ package.
     """
     search_string = file_name.replace("_", "+").replace(".", "+").replace("-", "+")
     google_qry = "https://www.google.com/?#q=projection+crs+epsg+"

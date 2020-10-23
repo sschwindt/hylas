@@ -31,7 +31,8 @@ def dict2str(dictionary, **kwargs):
         str: The dictionary as flattened text.
 
     Example:
-        ``dict={e: 1, f: 2, ...}`` -> ``"{e: 1, f: 2, ...}"``
+        ``>>> dict2str({e: 1, f: 2, ...})``
+        ``Out[]: "{e: 1, f: 2, ...}"``
     """
 
     if kwargs.get("inverse_dict"):
