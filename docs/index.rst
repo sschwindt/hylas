@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root ``toctree`` directive.
 
-HYLAS - USER GUIDE
-==================
+hylas
+=====
 
 .. toctree::
     :maxdepth: 4
@@ -17,7 +17,8 @@ HYLAS - USER GUIDE
 
 Detect object size and types from airborne lidar data with the *hylas* Python3 package. *hylas* is documented with *Sphinx* and uses *laspy* with a set of other requirements. Therefore, it is recommended to follow the workflow described in this workflow to set up the working environment.
 
-.. note::
+.. note:: Get docs as PDF
+
     This documentation is also as available as a style-adapted PDF (`download <https://hylas.readthedocs.io/_/downloads/en/latest/pdf/>`_).
 
 Installation
