@@ -223,7 +223,6 @@ Start *PyCharm* and create a new project from the ``hylas`` repository:
    Make sure to use the system interpreter ``/usr/bin/python3`` (*Project* > *Settings* > *Interpreter*). You will probably get a warning message about using the system interpreter for a project, but this is acceptable when you are working on a VM.
 
 
-
 .. admonition:: WINDOWS / ANACONDA USERS
 
    * Enable the *View hidden folders* option to see the ``AppData`` folder in *Windows Explorer*. *Microsoft* explains how this works on their `support website <https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files>`_. Then, you can copy-paste folder directories from *Windows Explorer* to *PyCharm*.
@@ -334,6 +333,8 @@ The ``LasPoint`` class
 
 geo_utils
 ---------
+
+``geo_utils`` is a package for creating, modifying, and transforming geo-spatial datasets. A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_.
 
 geo_utils MASTER (geo_utils.py)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
