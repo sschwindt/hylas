@@ -64,6 +64,7 @@ def process_file(source_file_name, epsg, **opts):
                           overwrite=default_keys["overwrite"])
 
     if "las2shp" in default_keys["methods"] or not os.path.isfile(default_keys["shapefile_name"]):
+        logging.info(" * Need to create a point shapefile first (%s does not exist) ..." % default_keys["shapefile_name"])
         las_object.export2shp(shapefile_name=default_keys["shapefile_name"])
 
     if "las2dem" in "".join(default_keys["methods"]):

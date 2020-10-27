@@ -19,6 +19,7 @@ class LasPoint:
         offset (laspy.file.File().header.offset): Offset of las points (auto-read)
         overwrite (bool): Enable or disable overwriting existing files (default: ``True``)
         scale (laspy.file.File().header.scale): Scale of las points relative to the offset (auto-read)
+        shapefile_name (str): The name and dicrectorty of a point shapefile where all las-file data is stored
         srs (osr.SpatialReference): The geo-spatial reference imported from ``epsg``
     """
 
@@ -32,6 +33,7 @@ class LasPoint:
         self.offset = np.array(self.las_file.header.offset, dtype=np.float64)
         self.overwrite = overwrite
         self.scale = np.array(self.las_file.header.scale, dtype=np.float64)
+        self.shapefile_name = ""
         self.srs = osr.SpatialReference()
         self.srs.ImportFromEPSG(epsg)
         logging.info("Using EPSG = %04i" % epsg)
@@ -43,12 +45,16 @@ class LasPoint:
     def __repr__(self):
         return "%s" % self.__class__.__name__
 
-    def create_dem(self, target_file_name="", pixel_size=1.0):
+    def create_dem(self, target_file_name="", pixel_size=1, **kwargs):
         """Creates a digital elevation model (DEM) in GeoTIFF format from the *las* file points.
 
         Args:
             target_file_name (str): A file name including an existing directory where the dem  will be created< must end on ``.tif``.
-            pixel_size (float): The size of one pixel relative to the spatial reference system.
+            pixel_size (int): The size of one pixel relative to the spatial reference system
+
+        Keyword Args:
+            src_shp_file_name (str): Name of a shapefile from which elevation information is to be extracted (default: name of the las-point shapefile)
+            elevation_field_name (str): Name of the field from which elevation data is to be extracted (default: ``"elevation"``)
 
         Hint:
             This function works independently and does not require the prior creation of a shapefile.
@@ -58,17 +64,53 @@ class LasPoint:
         """
         logging.info(" * Creating GeoTIFF DEM %s ..." % target_file_name)
 
+        default_keys = {"src_shp_file_name": self.shapefile_name,
+                        "elevation_field_name": "elevation",
+                        }
+
+        for k in default_keys.keys():
+            if kwargs.get(k):
+                default_keys[k] = str(kwargs.get(k))
+
+        if not os.path.isfile(default_keys["src_shp_file_name"]):
+            logging.info(" * Need to create a point shapefile first (%s does not exist) ..." % default_keys["src_shp_file_name"])
+            self.export2shp(shapefile_name=default_keys["src_shp_file_name"])
+
         if os.path.isfile(target_file_name) and self.overwrite:
             logging.info("   -- Overwriting %s ..." % target_file_name)
             geo_utils.remove_tif(target_file_name)
 
-        geo_utils.create_raster(file_name=target_file_name,
-                                raster_array=self._get_xyz_array(),
-                                pixel_height=pixel_size,
-                                pixel_width=pixel_size,
-                                origin=(self.offset[0], self.offset[1]),
-                                epsg=self.epsg)
+        geo_utils.rasterize(self.shapefile_name, target_file_name, pixel_size=pixel_size,
+                            field_name=default_keys["elevation_field_name"])
+
+
+        """
+        np_dem = self._get_xyz_array()
+        np.savetxt(np_dem)
+        self.srs.
+        import gdal
+        gdal.Grid(destName=target_file_name, srcDS=np_dem, format="GTiff", outputSRS=self.srs,
+                  width=pixel_size, height)
+
+        # tweak points into a regularly spaced grid
+        # zi, yi, xi = np.histogram2d(np_dem[1], np_dem[0],
+        #                             bins=(pixel_size, pixel_size),
+        #                             weights=np_dem[2],
+        #                             normed=False)
+        #
+        # counts, _, _ = np.histogram2d(np_dem[1], np_dem[0], bins=(pixel_size, pixel_size))
+        # zi = np.ma.masked_invalid(zi / counts)
+        #
+        #
+        # geo_utils.create_raster(file_name=target_file_name,
+        #                         raster_array=np_dem,
+        #                         pixel_height=pixel_size,
+        #                         pixel_width=pixel_size,
+        #                         origin=(self.offset[0], self.offset[1]),
+        #                         epsg=self.epsg)
         logging.info("   -- Done.")
+        """
+
         return 0
 
     def export2shp(self, **kwargs):
@@ -81,20 +123,20 @@ class LasPoint:
             str: ``/path/to/shapefile.shp``, which is a point shapefile created by the function.
         """
         if kwargs.get("shapefile_name"):
-            shapefile_name = kwargs.get("shapefile_name")
+            self.shapefile_name = kwargs.get("shapefile_name")
         else:
-            shapefile_name = os.path.abspath("") + "/{0}.shp".format(self.las_file.filename)
+            self.shapefile_name = os.path.abspath("") + "/{0}.shp".format(self.las_file.filename)
 
-        if os.path.isfile(shapefile_name) and self.overwrite is False:
-            logging.info(" * Using existing shapefile %s." % shapefile_name)
-            return shapefile_name
+        if os.path.isfile(self.shapefile_name) and self.overwrite is False:
+            logging.info(" * Using existing shapefile %s." % self.shapefile_name)
+            return self.shapefile_name
 
         self._build_data_frame()
 
-        logging.info(" * Writing geopandas.GeoDataFrame to shapefile (%s) ..." % shapefile_name)
-        self.gdf.to_file(filename=shapefile_name, driver="ESRI Shapefile")
+        logging.info(" * Writing geopandas.GeoDataFrame to shapefile (%s) ..." % self.shapefile_name)
+        self.gdf.to_file(filename=self.shapefile_name, driver="ESRI Shapefile")
         logging.info("   -- Done.")
-        return shapefile_name
+        return self.shapefile_name
 
     def get_file_info(self):
         """ Prints las file information to console."""
@@ -137,8 +179,10 @@ class LasPoint:
         """Parses attributes and append entries to point list."""
 
         logging.info(" * Extracting transformed point coordinates ...")
-        dem=self._get_xyz_array()
+        dem = self._get_xyz_array()
         point_dict = {"geometry": geopandas.points_from_xy(x=dem[0], y=dem[1], z=dem[2])}
+        # add elevation field to facilitate DEM export
+        point_dict.update({"elevation": dem[2]})
 
         logging.info(" * Parsing and extracting user attributes of points ...")
         for attr in self.attributes:

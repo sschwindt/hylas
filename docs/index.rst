@@ -18,12 +18,8 @@ hylas
 *hylas* extracts geo-spatial information from *las* files and converts them to ESRI shapefiles or GeoTIFF rasters. *las* is the typical file format for storing airborne lidar (`Light Detection and Ranging <https://oceanservice.noaa.gov/facts/lidar.html>`_) data. *hylas* is a *Python3* package and this documentation uses a *Sphinx* *readthedocs* theme. The functional core of *hylas* involves the creation of:
 
 * A point shapefile with user-defined point attributes such as *intensity*, *waveform*, or *nir*.
+* Digital elevation model (DEM) with user-defined resolution (pixel size).
 * *GeoTIFF* rasters with user-defined resolution (pixel size) for any attribute of a *las* file (e.g., *intensity*, *waveform*, or *nir*).
-
-.. admonition:: todo
-
-   * Digital elevation model (DEM) with user-defined resolution (pixel size).
-
 
 To ensure the best experience with *hylas* and its useful functions, follow the *Installation* instructions for setting up the working environment either on *Linux* or on *Windows*.
 
@@ -310,6 +306,11 @@ The main file: hylas.py
    :members:
    :private-members:
 
+.. automodule:: hylas.process_file
+   :members:
+   :undoc-members:
+   :private-members:
+
 Basic parameters: config.py
 ----------------------------
 
@@ -343,7 +344,7 @@ geo_utils MASTER (geo_utils.py)
 .. automodule:: geo_utils.geo_utils
    :members:
 
-geo_utils raster management (dataset_mgmt.py)
+geo_utils raster management (raster_mgmt.py)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.raster_mgmt
    :members:

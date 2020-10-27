@@ -1,6 +1,5 @@
 import gdal
 import osr
-import glob
 from .geoconfig import *
 
 
