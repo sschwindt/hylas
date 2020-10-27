@@ -45,12 +45,12 @@ class LasPoint:
     def __repr__(self):
         return "%s" % self.__class__.__name__
 
-    def create_dem(self, target_file_name="", pixel_size=1, **kwargs):
+    def create_dem(self, target_file_name="", pixel_size=1.0, **kwargs):
         """Creates a digital elevation model (DEM) in GeoTIFF format from the *las* file points.
 
         Args:
             target_file_name (str): A file name including an existing directory where the dem  will be created< must end on ``.tif``.
-            pixel_size (int): The size of one pixel relative to the spatial reference system
+            pixel_size (float): The size of one pixel relative to the spatial reference system
 
         Keyword Args:
             src_shp_file_name (str): Name of a shapefile from which elevation information is to be extracted (default: name of the las-point shapefile)
@@ -80,37 +80,8 @@ class LasPoint:
             logging.info("   -- Overwriting %s ..." % target_file_name)
             geo_utils.remove_tif(target_file_name)
 
-        geo_utils.rasterize(self.shapefile_name, target_file_name, pixel_size=pixel_size,
+        geo_utils.rasterize(default_keys["src_shp_file_name"], target_file_name, pixel_size=pixel_size,
                             field_name=default_keys["elevation_field_name"])
-
-
-        """
-        np_dem = self._get_xyz_array()
-        np.savetxt(np_dem)
-        self.srs.
-        import gdal
-        gdal.Grid(destName=target_file_name, srcDS=np_dem, format="GTiff", outputSRS=self.srs,
-                  width=pixel_size, height)
-
-        # tweak points into a regularly spaced grid
-        # zi, yi, xi = np.histogram2d(np_dem[1], np_dem[0],
-        #                             bins=(pixel_size, pixel_size),
-        #                             weights=np_dem[2],
-        #                             normed=False)
-        #
-        # counts, _, _ = np.histogram2d(np_dem[1], np_dem[0], bins=(pixel_size, pixel_size))
-        # zi = np.ma.masked_invalid(zi / counts)
-        #
-        #
-        # geo_utils.create_raster(file_name=target_file_name,
-        #                         raster_array=np_dem,
-        #                         pixel_height=pixel_size,
-        #                         pixel_width=pixel_size,
-        #                         origin=(self.offset[0], self.offset[1]),
-        #                         epsg=self.epsg)
-        logging.info("   -- Done.")
-        """
-
         return 0
 
     def export2shp(self, **kwargs):

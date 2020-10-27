@@ -7,7 +7,7 @@ shp_file_name = os.path.abspath("") + "/data/sub.shp"
 epsg = 25832
 methods = ["las2dem"]
 attribs = "aci"
-px_size = 2
+px_size = 0.5
 tif_prefix = os.path.abspath("") + "/data/sub"
 
 hylas.process_file(las_file_name,
