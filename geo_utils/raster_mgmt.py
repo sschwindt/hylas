@@ -156,6 +156,7 @@ def remove_tif(file_name):
         except FileNotFoundError:
             print("WARNING: The file %s does not exist." % file)
 
+
 def clip_raster(polygon, in_raster, out_raster):
     """Clips a raster to a polygon.
     

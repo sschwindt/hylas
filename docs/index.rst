@@ -306,7 +306,7 @@ The main file: hylas.py
    :members:
    :private-members:
 
-.. automodule:: hylas.process_file
+.. automodule:: hylas
    :members:
    :undoc-members:
    :private-members:

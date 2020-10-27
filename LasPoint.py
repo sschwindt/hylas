@@ -134,6 +134,7 @@ class LasPoint:
         self._build_data_frame()
 
         logging.info(" * Writing geopandas.GeoDataFrame to shapefile (%s) ..." % self.shapefile_name)
+        logging.info("   *** this action may take a while (0.5h per 1 million points)***")
         self.gdf.to_file(filename=self.shapefile_name, driver="ESRI Shapefile")
         logging.info("   -- Done.")
         return self.shapefile_name
