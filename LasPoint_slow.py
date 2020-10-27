@@ -13,12 +13,10 @@ class LasPoint:
 
     Attributes:
         las_file (laspy.file.File): A laspy file object
-        attributes (str): Defined with ``use_attributes``
+        las_attributes (str): Defined with ``use_attributes``
         epsg (int): Authority code
         gdf (geopandas.GeoDataFrame): geopandas data frame containing all points of the las file with the properties (columns) defined by ``use_attributes``
-        offset (laspy.file.File().header.offset): Offset of las points (auto-read)
-        overwrite (bool): Enable or disable overwriting existing files (default: ``True``)
-        scale (laspy.file.File().header.scale): Scale of las points relative to the offset (auto-read)
+        overwrite (bool): Enable or disable overwriting existing files (default: ``True``).
         srs (osr.SpatialReference): The geo-spatial reference imported from ``epsg``
     """
 
@@ -26,15 +24,15 @@ class LasPoint:
 
         self.las_file = laspy.file.File(las_file_name, mode="r")
 
-        self.attributes = use_attributes
+        self.las_attributes = use_attributes
         self.epsg = epsg
         self.gdf = geopandas.GeoDataFrame()  # void initialization
-        self.offset = np.array(self.las_file.header.offset, dtype=np.float64)
         self.overwrite = overwrite
-        self.scale = np.array(self.las_file.header.scale, dtype=np.float64)
         self.srs = osr.SpatialReference()
         self.srs.ImportFromEPSG(epsg)
         logging.info("Using EPSG = %04i" % epsg)
+
+        self._build_data_frame()
 
     def __del__(self):
         self.las_file.close()
@@ -43,7 +41,7 @@ class LasPoint:
     def __repr__(self):
         return "%s" % self.__class__.__name__
 
-    def create_dem(self, target_file_name="", pixel_size=1.0):
+    def create_dem(self, target_file_name="", pixel_size=1.0, overwrite=True):
         """Creates a digital elevation model (DEM) in GeoTIFF format from the *las* file points.
 
         Args:
@@ -58,17 +56,22 @@ class LasPoint:
         """
         logging.info(" * Creating GeoTIFF DEM %s ..." % target_file_name)
 
-        if os.path.isfile(target_file_name) and self.overwrite:
-            logging.info("   -- Overwriting %s ..." % target_file_name)
-            geo_utils.remove_tif(target_file_name)
+        pts = self.las_file.points['point'].copy().view(np.recarray)
+        scale = np.array(self.las_file.header.scale, dtype=np.float64)
+        offset = np.array(self.las_file.header.offset, dtype=np.float64)
+        las_file_fields = [str(dim.name.encode().decode()) for dim in self.las_file.point_format]
+
+        # read and transform data (from raw - fast than las_file.x)
+        dem_array = np.empty((len(pts), 3), dtype=np.float64)
+        dem_array[:, 0] = pts.X * scale[0] + offset[0]
+        dem_array[:, 1] = pts.Y * scale[1] + offset[1]
+        dem_array[:, 2] = pts.Z * scale[2] + offset[2]
 
         geo_utils.create_raster(file_name=target_file_name,
-                                raster_array=self._get_xyz_array(),
+                                raster_array=dem_array,
                                 pixel_height=pixel_size,
                                 pixel_width=pixel_size,
-                                origin=(self.offset[0], self.offset[1]),
                                 epsg=self.epsg)
-        logging.info("   -- Done.")
         return 0
 
     def export2shp(self, **kwargs):
@@ -89,15 +92,13 @@ class LasPoint:
             logging.info(" * Using existing shapefile %s." % shapefile_name)
             return shapefile_name
 
-        self._build_data_frame()
-
         logging.info(" * Writing geopandas.GeoDataFrame to shapefile (%s) ..." % shapefile_name)
         self.gdf.to_file(filename=shapefile_name, driver="ESRI Shapefile")
         logging.info("   -- Done.")
         return shapefile_name
 
     def get_file_info(self):
-        """ Prints las file information to console."""
+        r""" Prints las file information to console."""
 
         print("Point data formats in file:")
         for f in self.las_file.point_format:
@@ -117,31 +118,14 @@ class LasPoint:
                                           crs="EPSG:%04i" % self.epsg)
         logging.info("   -- Done.")
 
-    def _get_xyz_array(self):
-        """Extract x-y-z data from las records in a faster way than using ``las_file.x``, ``y``, or ``z``.
-
-        Returns:
-            ndarray: The DEM information extracted from the las file.
-        """
-        pts = self.las_file.points['point'].copy().view(np.recarray)
-
-        # read and transform data (from raw - fast than las_file.x)
-        dem_array = np.empty((3, len(pts)), dtype=np.float64)
-        dem_array[0, :] = pts.X * self.scale[0] + self.offset[0]
-        dem_array[1, :] = pts.Y * self.scale[1] + self.offset[1]
-        dem_array[2, :] = pts.Z * self.scale[2] + self.offset[2]
-
-        return dem_array
-
     def _parse_attributes(self):
-        """Parses attributes and append entries to point list."""
+        r"""Parses attributes and append entries to point list."""
 
         logging.info(" * Extracting transformed point coordinates ...")
-        dem=self._get_xyz_array()
-        point_dict = {"geometry": geopandas.points_from_xy(x=dem[0], y=dem[1], z=dem[2])}
+        point_dict = {"geometry": geopandas.points_from_xy(self.las_file.x, self.las_file.y, self.las_file.z)}
 
         logging.info(" * Parsing and extracting user attributes of points ...")
-        for attr in self.attributes:
+        for attr in self.las_attributes:
             try:
                 point_dict.update({wattr[attr]: self.las_file.__getattribute__(pattr[attr])})
                 logging.info("   -- added %s" % wattr[attr])

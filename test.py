@@ -5,7 +5,7 @@ import os
 las_file_name = os.path.abspath("") + "/data/sub_UTM32N_DHHN16_Klasse0_x.las"
 shp_file_name = os.path.abspath("") + "/data/sub.shp"
 epsg = 25832
-methods = ["las2tif"]
+methods = ["las2shp", "las2dem"]
 attribs = "aci"
 px_size = 2
 tif_prefix = os.path.abspath("") + "/data/sub"

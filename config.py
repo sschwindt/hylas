@@ -1,3 +1,5 @@
+"""This is the hylas config file - do not confuse with docs/conf (sphinx documentation config)
+nor geo_utils/geoconfig."""
 try:
     import os
     import logging
