@@ -305,10 +305,10 @@ The main file: hylas.py
 .. automodule:: hylas
    :members:
    :private-members:
+   .. automethod:: process_file
 
-.. automodule:: hylas
+.. automethod:: hylas.process_file
    :members:
-   :undoc-members:
    :private-members:
 
 Basic parameters: config.py
