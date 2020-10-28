@@ -23,10 +23,10 @@ def lookup_epsg(file_name):
 @log_actions
 @cache
 def process_file(source_file_name, epsg, **opts):
-    """Loads a las-file and convert it to another geospatial file format (kez word arguments ``**opts``).
+    """Loads a las-file and convert it to another geospatial file format (keyword arguments ``**opts``).
 
     Args:
-        source_file_name (`str`): Full directory of the source file to use with methods
+        source_file_name (str): Full directory of the source file to use with methods
                              * if method="las2*" > provide a las-file name
                              * if method="shp2*" > provide a shapefile name
         epsg (int): Authority code to use (try ``hylas.lookup_epsg(las_file_name)`` to look up the epsg online).
@@ -71,7 +71,8 @@ def process_file(source_file_name, epsg, **opts):
     if "las2dem" in "".join(default_keys["methods"]):
         las_object.create_dem(target_file_name=default_keys["tif_prefix"] + "_dem.tif",
                               src_shp_file_name=default_keys["shapefile_name"],
-                              pixel_size=default_keys["pixel_size"])
+                              pixel_size=default_keys["pixel_size"],
+                              interpolate_gap_pixels=default_keys["interpolate_gap_pixels"])
 
     if "2tif" in "".join(default_keys["methods"]):
         logging.info(" * Creating GeoTIFFs ...")

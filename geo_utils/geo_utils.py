@@ -159,6 +159,10 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         logging.info(" * %s already exists. Nothing to do." % out_raster_file_name)
         return None
 
+    # use gdal.Grid if gap interpolation (fill void pixels) is True
+    if interpolate_gap_pixels:
+        gdal.Grid(out_raster_file_name, in_shp_file_name, algorithm="linear:radius=-1", zfield=field_name)
+
     # open data source
     try:
         source_ds = ogr.Open(in_shp_file_name)
@@ -190,7 +194,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     try:
         srs.ImportFromEPSG(int(srs.GetAuthorityCode(None)))
     except RuntimeError as e:
-        print(e)
+        logging.error(e)
         return None
     target_ds.SetProjection(srs.ExportToWkt())
 

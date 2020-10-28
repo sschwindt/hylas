@@ -306,9 +306,29 @@ The main file: hylas.py
    :members:
    :private-members:
 
-.. automodule:: hylas
-   :members:
-   .. autofunction:: process_file
+.. admonition:: ``process_file(source_file_name, epsg, **opts)``
+
+   Loads a las-file and convert it to another geospatial file format (keyword arguments ``**opts``). Note that this function documentation is currently manually implemented because of *Sphinx* having troubles to look behind decorators.
+
+   Arguments:
+      * source_file_name (``str``): Full directory of the source file to use with methods
+         * if ``method="las2*"`` > provide a las-file name
+         * if ``method="shp2*"`` > provide a shapefile name
+      * epsg (``int``): Authority code to use (try ``hylas.lookup_epsg(las_file_name)`` to look up the epsg online).
+
+    Keyword Arguments (``**opts``):
+      * create_dem (``bool``): Set to True for creating a digital elevation model (DEM - default: ``False``)
+      * extract_attributes (``str``): Attributes to extract from the las-file available in ``pattr`` (``config.py``)
+      * methods(``list`` [``str``]): Enabled list strings are ``las2shp``, ``las2tif``, ``shp2tif``, ``las2dem``
+      * overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
+      * pixel_size (``float``): Use with *2tif  to set the size of pixels relative to base units (``pixel_size=5`` > 5-m pixels)
+      * shapefile_name (``str``): Name of the point shapefile to produce with las2*
+      * tif_prefix (``str``): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
+      * interpolate_gap_pixels (``bool``): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
+
+    Returns:
+      ``bool``: ``True`` if successful, ``False`` otherwise
+
 
 Basic parameters: config.py
 ----------------------------
