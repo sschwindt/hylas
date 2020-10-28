@@ -82,6 +82,7 @@ class LasPoint:
 
         geo_utils.rasterize(default_keys["src_shp_file_name"], target_file_name, pixel_size=pixel_size,
                             field_name=default_keys["elevation_field_name"])
+        logging.info("   -- Done.")
         return 0
 
     def export2shp(self, **kwargs):

@@ -305,7 +305,6 @@ The main file: hylas.py
 .. automodule:: hylas
    :members:
    :private-members:
-   .. automethod:: process_file
 
 .. automethod:: hylas.log_actions.cache.process_file
    :members:
