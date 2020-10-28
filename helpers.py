@@ -7,7 +7,7 @@ def cache(fun):
         check_cache()
         fun(*args, **kwargs)
         remove_directory(cache_folder)
-    wrapper.__doc__ = "{}\n{}".format(fun.__name__, fun.__doc__)
+    wrapper.__doc__ = fun.__doc__
     return wrapper
 
 
@@ -64,7 +64,7 @@ def log_actions(fun):
         start_logging()
         fun(*args, **kwargs)
         logging.shutdown()
-    wrapper.__doc__ = "{}\n{}".format(fun.__name__, fun.__doc__)
+    wrapper.__doc__ = fun.__doc__
     return wrapper
 
 

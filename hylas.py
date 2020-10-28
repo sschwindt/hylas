@@ -29,7 +29,7 @@ def process_file(source_file_name, epsg, **opts):
         source_file_name (`str`): Full directory of the source file to use with methods
                              * if method="las2*" > provide a las-file name
                              * if method="shp2*" > provide a shapefile name
-        epsg (int): Authority code to use (try lashy.lookup_epsg(las_file_name) to look up the epsg online).
+        epsg (int): Authority code to use (try ``hylas.lookup_epsg(las_file_name)`` to look up the epsg online).
 
     Keyword Args:
         create_dem (bool): default: False - set to True for creating a digital elevation model (DEM)
@@ -39,12 +39,14 @@ def process_file(source_file_name, epsg, **opts):
         pixel_size (float): Use with *2tif  to set the size of pixels relative to base units (pixel_size=5 > 5-m pixels)
         shapefile_name (str): Name of the point shapefile to produce with las2*
         tif_prefix (str): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
+        interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
 
     Returns:
         bool: ``True`` if successful, ``False`` otherwise
     """
 
     default_keys = {"extract_attributes": "aci",
+                    "interpolate_gap_pixels": True,
                     "methods": ["las2shp"],
                     "shapefile_name": os.path.abspath("") + "/{0}.shp".format(source_file_name.split(".")[0]),
                     "tif_prefix": os.path.abspath("") + "/{0}_".format(source_file_name.split(".")[0]),
