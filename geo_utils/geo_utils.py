@@ -135,7 +135,7 @@ def raster2polygon(file_name, out_shp_fn, band_number=1, field_name="values"):
 
 
 def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_value=-9999,
-              rdtype=gdal.GDT_Float32, overwrite=True, **kwargs):
+              rdtype=gdal.GDT_Float32, overwrite=True, interpolate_gap_pixels=False, **kwargs):
     """Converts any ESRI shapefile to a raster.
 
     Args:
@@ -144,7 +144,8 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         pixel_size (float): Pixel size as multiple of length units defined in the spatial reference (default: ``10``)
         no_data_value (int OR float): Numeric value for no-data pixels (default: ``-9999``)
         rdtype (gdal.GDALDataType): The raster data type (default: ``gdal.GDT_Float32`` (32 bit floating point)
-        overwrite (bool): Overwrite existing files (default: ``True``).
+        overwrite (bool): Overwrite existing files (default: ``True``)
+        interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile element with interpolated values (default: ``False``)
 
     Keyword Args:
         field_name (str): Name of the shapefile's field with values to burn to raster pixel values.

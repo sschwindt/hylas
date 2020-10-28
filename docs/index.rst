@@ -306,8 +306,9 @@ The main file: hylas.py
    :members:
    :private-members:
 
-.. automethod:: hylas.log_actions.cache.process_file
-   :private-members:
+.. automodule:: hylas
+   :members:
+   .. autofunction:: hylas(source_file_name, epsg, **opts)
 
 Basic parameters: config.py
 ----------------------------
