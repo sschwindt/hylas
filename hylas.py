@@ -1,5 +1,6 @@
 from LasPoint import *
 import webbrowser
+SPHINX_BUILD = bool(os.environ.get('SPHINX_BUILD', ''))
 
 
 def lookup_epsg(file_name):
