@@ -308,7 +308,7 @@ The main file: hylas.py
 
 .. automodule:: hylas
    :members:
-   .. autofunction:: process_file(source_file_name, epsg, **opts)
+   .. autofunction:: process_file
 
 Basic parameters: config.py
 ----------------------------

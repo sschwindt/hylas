@@ -4,14 +4,6 @@ import sys
 import os
 import re
 import datetime
-try:
-    from decorator import decorator
-except ImportError:
-    # no decorator available - use a nop-op decorator
-    def decorator(fun):
-        return fun
-
-os.environ['SPHINX_BUILD'] = '1'
 
 # If we are building locally, or the build on Read the Docs looks like a PR
 # build, prefer to use the version of the theme in this repo, not the installed
