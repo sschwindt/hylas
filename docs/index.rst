@@ -72,28 +72,33 @@ Now set the ``python`` environment variable so that it points at *Python3*:
    $ alias python=python3
 
 
-Additional libraries for geospatial analysis
+PIP3 and additional libraries for geospatial analysis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://hydro-informatics.github.io/hypy_gui.>`_ are available for use with `geopandas <https://geopandas.org/>`_:
 
 .. code:: console
 
+   $ sudo apt install python3-pip
    $ sudo apt-get install python3-tk
    $ sudo apt install tk8.6-dev
    $ sudo apt install libgeos-dev
+   $ sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+   $ sudo apt-get update
+   $ sudo apt-get install gdal-bin
+   $ sudo apt-get install libgdal-dev
+   $ export CPLUS_INCLUDE_PATH=/usr/include/gdal
+   $ export C_INCLUDE_PATH=/usr/include/gdal
+   $ pip3 install GDAL==3.1.4
 
+.. note::
 
-Install PIP3 and Python libraries
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^S
+   To leverage the full functionality of *hylas*, GDAL version 3.2 is required (to be released).
 
-Then install: ``pip3``:
+Python libraries for hylas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: console
-
-   $ sudo apt install python3-pip
-
-Then use the *requirements* file from this repository and copy it to the project folder. In *Terminal* type:
+Use the *requirements* file from this repository and copy it to the project folder. In *Terminal* type:
 
 .. code:: console
 
@@ -310,24 +315,24 @@ The main file: hylas.py
 
    Loads a las-file and convert it to another geospatial file format (keyword arguments ``**opts``). Note that this function documentation is currently manually implemented because of *Sphinx* having troubles to look behind decorators.
 
-   Arguments:
-      * source_file_name (``str``): Full directory of the source file to use with methods
+Arguments:
+      * **source_file_name** (``str``): Full directory of the source file to use with methods
          * if ``method="las2*"`` > provide a las-file name
          * if ``method="shp2*"`` > provide a shapefile name
-      * epsg (``int``): Authority code to use (try ``hylas.lookup_epsg(las_file_name)`` to look up the epsg online).
+      * **epsg** (``int``): Authority code to use (try ``hylas.lookup_epsg(las_file_name)`` to look up the epsg online).
 
-    Keyword Arguments (``**opts``):
-      * create_dem (``bool``): Set to True for creating a digital elevation model (DEM - default: ``False``)
-      * extract_attributes (``str``): Attributes to extract from the las-file available in ``pattr`` (``config.py``)
-      * methods(``list`` [``str``]): Enabled list strings are ``las2shp``, ``las2tif``, ``shp2tif``, ``las2dem``
-      * overwrite (bool): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
-      * pixel_size (``float``): Use with *2tif  to set the size of pixels relative to base units (``pixel_size=5`` > 5-m pixels)
-      * shapefile_name (``str``): Name of the point shapefile to produce with las2*
-      * tif_prefix (``str``): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
-      * interpolate_gap_pixels (``bool``): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
+Keyword Arguments (``**opts``):
+      * **create_dem** (``bool``): Set to True for creating a digital elevation model (DEM - default: ``False``)
+      * **extract_attributes** (``str``): Attributes to extract from the las-file available in ``pattr`` (``config.py``)
+      * **methods** (``list`` [``str``]): Enabled list strings are ``las2shp``, ``las2tif``, ``shp2tif``, ``las2dem``
+      * **overwrite** (``bool``): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
+      * **pixel_size** (``float``): Use with *2tif  to set the size of pixels relative to base units (``pixel_size=5`` > 5-m pixels)
+      * **shapefile_name** (``str``): Name of the point shapefile to produce with ``las2*``
+      * **tif_prefix** (``str``): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
+      * **interpolate_gap_pixels** (``bool``): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
 
-    Returns:
-      ``bool``: ``True`` if successful, ``False`` otherwise
+Returns:
+      ``bool``: ``True`` if successful, ``False`` otherwise.
 
 
 Basic parameters: config.py

@@ -55,6 +55,7 @@ class LasPoint:
         Keyword Args:
             src_shp_file_name (str): Name of a shapefile from which elevation information is to be extracted (default: name of the las-point shapefile)
             elevation_field_name (str): Name of the field from which elevation data is to be extracted (default: ``"elevation"``)
+            interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
 
         Hint:
             This function works independently and does not require the prior creation of a shapefile.
@@ -66,6 +67,7 @@ class LasPoint:
 
         default_keys = {"src_shp_file_name": self.shapefile_name,
                         "elevation_field_name": "elevation",
+                        "interpolate_gap_pixels": True,
                         }
 
         for k in default_keys.keys():
@@ -81,7 +83,8 @@ class LasPoint:
             geo_utils.remove_tif(target_file_name)
 
         geo_utils.rasterize(default_keys["src_shp_file_name"], target_file_name, pixel_size=pixel_size,
-                            field_name=default_keys["elevation_field_name"])
+                            field_name=default_keys["elevation_field_name"],
+                            interpolate_gap_pixels=default_keys["interpolate_gap_pixels"])
         logging.info("   -- Done.")
         return 0
 

@@ -1,5 +1,7 @@
 """``geo_utils`` is a package for creating, modifying, and transforming geo-spatial datasets.
  A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_."""
+import subprocess
+
 from .srs_mgmt import *
 import itertools
 gdal.UseExceptions()
@@ -20,7 +22,7 @@ def float2int(raster_file_name, band_number=1):
     try:
         array = array.astype(int)
     except ValueError:
-        logging.error("Invalid raster pixel values.")
+        logging.error("! Invalid raster pixel values.")
         return raster_file_name
     new_name = raster_file_name.split(".tif")[0] + "_int.tif"
 
@@ -58,7 +60,7 @@ def raster2line(raster_file_name, out_shp_fn, pixel_value):
     # extract pixels with the user-defined pixel value from the raster array
     trajectory = np.where(array == pixel_value)
     if np.count_nonzero(trajectory) is 0:
-        logging.error("The defined pixel_value (%s) does not occur in the raster band." % str(pixel_value))
+        logging.error("! The defined pixel_value (%s) does not occur in the raster band." % str(pixel_value))
         return None
 
     # convert pixel offset to coordinates and append to nested list of points
@@ -112,6 +114,7 @@ def raster2polygon(file_name, out_shp_fn, band_number=1, field_name="values"):
      Returns:
          osgeo.ogr.DataSource: Python object of the provided ``out_shp_fn``.
     """
+    logging.info(" * Polygonizing %s ..." % str(file_name))
     # ensure that the input raster contains integer values only and open the input raster
     file_name = float2int(file_name)
     raster, raster_band = open_raster(file_name, band_number=band_number)
@@ -150,8 +153,11 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     Keyword Args:
         field_name (str): Name of the shapefile's field with values to burn to raster pixel values.
 
+    Hints:
+        ``interpolate_gap_pixels=True`` only works with GDAL version 3.2 and newer.
+
     Returns:
-        Creates the GeoTIFF raster defined with ``out_raster_file_name``.
+        int: Creates the GeoTIFF raster defined with ``out_raster_file_name`` (success: ``0``, otherwise ``None``).
     """
 
     # check if any action is required
@@ -159,15 +165,11 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         logging.info(" * %s already exists. Nothing to do." % out_raster_file_name)
         return None
 
-    # use gdal.Grid if gap interpolation (fill void pixels) is True
-    if interpolate_gap_pixels:
-        gdal.Grid(out_raster_file_name, in_shp_file_name, algorithm="linear:radius=-1", zfield=field_name)
-
     # open data source
     try:
         source_ds = ogr.Open(in_shp_file_name)
-    except RuntimeError as e:
-        logging.error("Could not open %s." % str(in_shp_file_name))
+    except RuntimeError as err:
+        logging.error("! Could not open %s." % str(in_shp_file_name))
         return None
     source_lyr = source_ds.GetLayer()
 
@@ -178,24 +180,65 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     x_res = int((x_max - x_min) / pixel_size)
     y_res = int((y_max - y_min) / pixel_size)
 
+    # get spatial reference system and assign to raster
+    srs = get_srs(source_ds)
+    try:
+        srs.ImportFromEPSG(int(srs.GetAuthorityCode(None)))
+    except RuntimeError as err:
+        logging.error(e)
+        return None
+
+    # use gdal.Grid if gap interpolation (fill void pixels) is True
+    if interpolate_gap_pixels:
+        logging.info(" * Creating gridded raster with interpolated values for empty pixels from neighbouring pixels ...")
+        logging.info("   -- Note: to deactivate pixel value interpolation option use interpolate_gap_pixels=False")
+        try:
+            rasterize_opts = ["a invdist:linear:radius1=-1:radius2=-1:smoothing=0.0",
+                              "of GTiff",
+                              "ot %s" % gdal_dtype_dict[int(rdtype)].strip("gdal.GDT_"),
+                              "txe {0} {1}".format(str(x_min), str(x_max)),
+                              "tye {0} {0}".format(str(y_min), str(y_max)),
+                              "tr {0} {1}".format(str(x_res), str(y_res)),
+                              "zfield '%s'" % str(kwargs.get("field_name")),
+                              "l {0} {1} {2}".format(str(source_lyr.GetName()), in_shp_file_name, out_raster_file_name)
+                              ]
+        except KeyError:
+            logging.error("! Invalid gdal_grid options defined.")
+            return None
+        try:
+            rasterize_cmd = "gdal_grid -" + " -".join(rasterize_opts)
+            #del source_ds  # avoid that the source is locked
+            subprocess.call(rasterize_cmd)
+            """
+            gdal.Grid(out_raster_file_name, in_shp_file_name,
+                      algorithm="invdist:linear:radius1=-1:radius2=-1:smoothing=0.0",
+                      zfield=kwargs.get("field_name"),
+                      outputType=rdtype,
+                      outputSRS=srs,
+                      tr=(pixel_size, pixel_size))
+            """
+            return 0
+
+        except RuntimeError:
+            try:
+                logging.info("   -- Could not run rasterzation with spatial resolution - retrying without pixel_size ...")
+                rasterize_cmd = str("gdal_grid -" + " -".join(rasterize_opts)).replace(" -tr {0} {1}".format(str(x_res), str(y_res)), "")
+                subprocess.call(rasterize_cmd)
+            except RuntimeError as new_err:
+                logging.error("! %s." % str(new_err))
+
     # create destination data source (GeoTIff raster)
     try:
         target_ds = gdal.GetDriverByName('GTiff').Create(out_raster_file_name, x_res, y_res, 1, eType=rdtype)
-    except RuntimeError as e:
-        logging.error("Could not create %s." % str(out_raster_file_name))
+    except RuntimeError as err:
+        logging.error("! Could not create %s." % str(out_raster_file_name))
         return None
     target_ds.SetGeoTransform((x_min, pixel_size, 0, y_max, 0, -pixel_size))
     band = target_ds.GetRasterBand(1)
     band.Fill(no_data_value)
     band.SetNoDataValue(no_data_value)
 
-    # get spatial reference system and assign to raster
-    srs = get_srs(source_ds)
-    try:
-        srs.ImportFromEPSG(int(srs.GetAuthorityCode(None)))
-    except RuntimeError as e:
-        logging.error(e)
-        return None
+    # assign spatial reference
     target_ds.SetProjection(srs.ExportToWkt())
 
     # RasterizeLayer(Dataset dataset, int bands, Layer layer, pfnTransformer=None, pTransformArg=None,
@@ -207,8 +250,8 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         else:
             gdal.RasterizeLayer(target_ds, [1], source_lyr, None, None, burn_values=[0],
                                 options=["ALL_TOUCHED=TRUE"])
-    except RuntimeError as e:
-        logging.error("Could not rasterize (burn values from %s)." % str(in_shp_file_name))
+    except RuntimeError as err:
+        logging.error("! Could not rasterize (burn values from %s)." % str(in_shp_file_name))
         return None
 
     # release raster band
