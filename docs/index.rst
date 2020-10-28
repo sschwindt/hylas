@@ -41,7 +41,7 @@ Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.o
 * `Install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
 * `Enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image)
 
-Other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.>`_ (e.g., *Wine*) are not required in the following.
+Other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html>`_ (e.g., *Wine*) are not required in the following.
 
 Prepare your system
 ^^^^^^^^^^^^^^^^^^^
@@ -85,7 +85,7 @@ Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://h
 
 
 Install PIP3 and Python libraries
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^S
 
 Then install: ``pip3``:
 
@@ -307,7 +307,6 @@ The main file: hylas.py
    :private-members:
 
 .. automethod:: hylas.log_actions.cache.process_file
-   :members:
    :private-members:
 
 Basic parameters: config.py

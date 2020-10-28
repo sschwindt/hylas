@@ -1,4 +1,3 @@
-import geo_utils
 from LasPoint import *
 import webbrowser
 
@@ -14,6 +13,7 @@ def lookup_epsg(file_name):
         * This function opens a google search in the default web browser.
         * More information about projections, spatial reference systems, and coordinate systems
          can be obtained with the `geo_utils <https://geo-utils.readthedocs.io>`_ package.
+
     """
     search_string = file_name.replace("_", "+").replace(".", "+").replace("-", "+")
     google_qry = "https://www.google.com/?#q=projection+crs+epsg+"
@@ -23,14 +23,13 @@ def lookup_epsg(file_name):
 @log_actions
 @cache
 def process_file(source_file_name, epsg, **opts):
-    """Loads a las-file and convert it to another geospatial file format (**opts)
+    """Loads a las-file and convert it to another geospatial file format (kez word arguments ``**opts``).
 
     Args:
         source_file_name (`str`): Full directory of the source file to use with methods
                              * if method="las2*" > provide a las-file name
                              * if method="shp2*" > provide a shapefile name
         epsg (int): Authority code to use (try lashy.lookup_epsg(las_file_name) to look up the epsg online).
-        **opts: optional keyword arguments
 
     Keyword Args:
         create_dem (bool): default: False - set to True for creating a digital elevation model (DEM)
