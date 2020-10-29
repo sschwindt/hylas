@@ -72,7 +72,7 @@ class LasPoint:
         logging.info(" * Creating GeoTIFF DEM %s ..." % target_file_name)
 
         default_keys = {"src_shp_file_name": self.shapefile_name,
-                        "elevation_field_name": "elevation",
+                        "elevation_field_name": "Elevation",
                         "interpolate_gap_pixels": True,
                         "radius1": -1,
                         "radius2": -1,
@@ -176,7 +176,7 @@ class LasPoint:
         dem = self._get_xyz_array()
         point_dict = {"geometry": geopandas.points_from_xy(x=dem[0], y=dem[1], z=dem[2])}
         # add elevation field to facilitate DEM export
-        point_dict.update({"elevation": dem[2]})
+        point_dict.update({"elevation": self.las_file.z})
 
         logging.info(" * Parsing and extracting user attributes of points ...")
         for attr in self.attributes:

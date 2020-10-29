@@ -81,6 +81,7 @@ def process_file(source_file_name, epsg, **opts):
         las_object.export2shp(shapefile_name=default_keys["shapefile_name"])
 
     if "las2dem" in "".join(default_keys["methods"]):
+        logging.info(" * Generating DEM from %s." % default_keys["shapefile_name"])
         las_object.create_dem(target_file_name=default_keys["tif_prefix"] + "_dem.tif",
                               src_shp_file_name=default_keys["shapefile_name"],
                               pixel_size=default_keys["pixel_size"],

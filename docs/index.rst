@@ -336,7 +336,7 @@ Keyword Arguments (``**opts``):
       * **extract_attributes** (``str``): Attributes to extract from the las-file available in ``pattr`` (``config.py``)
       * **methods** (``list`` [``str``]): Enabled list strings are ``las2shp``, ``las2tif``, ``shp2tif``, ``las2dem``
       * **overwrite** (``bool``): Overwrite existing shapefiles and/or GeoTIFFs (default: ``True``).
-      * **pixel_size** (``float``): Use with *2tif  to set the size of pixels relative to base units (``pixel_size=5`` > 5-m pixels)
+      * **pixel_size** (``float``): Use with *2tif  to set the size of pixels relative to base units (``pixel_size=5`` indicates 5x5-m pixels)
       * **shapefile_name** (``str``): Name of the point shapefile to produce with ``las2*``
       * **tif_prefix** (``str``): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
       * **interpolate_gap_pixels** (``bool``): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
@@ -354,7 +354,8 @@ More information on pixel value interpolation:
 * ``interpolate_gap_pixels=True`` interpolates values at pixels that are not touched by any las point.
 * The pixel value interpolation uses ``gdal_grid`` (i.e., its Python bindings through ``gdal.Grid()``).
 * Control the interpolation parameters with the keyword arguments ``radius1``, ``radius2``, ``power``, ``max_points``, ``min_points``,  and ``smoothing``.
-* All variables are illustratively explained on the `GDAL website <https://gdal.org/tutorials/gdal_grid_tut.html?highlight=grid>`_.
+
+.. seealso:: All variables are illustratively explained on the `GDAL website <https://gdal.org/tutorials/gdal_grid_tut.html?highlight=grid>`_.
 
 
 Basic parameters: config.py
@@ -409,6 +410,24 @@ geo_utils dataset Conversion (dataset_mgmt.py)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: geo_utils.dataset_mgmt
    :members:
+
+Troubleshooting
+===============
+
+Memory errors
+-------------
+
+.. admonition:: MemoryError
+
+   **Cause**: *las* file may have size of several GiB, which may quickly cause a ``MemoryError`` (e.g., ``MemoryError: Unable to allocate 9.1 GiB for an array with shape ...``). In particular the *Linux* kernel will not attempt to run actions that exceed the commit-able memory.
+
+   **Solution**: Enable memory over-committing:
+      * Check the current over-commit mode in *Terminal*:
+         ``cat /proc/sys/vm/overcommit_memory``
+      * If ``0`` is the answer, the system calculates array dimensions and the required memory (e.g., an array with dimensions ``(266838515, 12, 49)`` requires a memory of ``266838515 * 12 *49 / 1024.0**3`` = ``146`` GiB, which is unlikely to fit in the memory).
+      * To enable over-committing, set the commit mode to ``1``:
+         ``echo 1 | sudo tee /proc/sys/vm/overcommit_memory``
+
 
 
 Contribute (developers)
