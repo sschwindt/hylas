@@ -50,7 +50,7 @@ Open *Terminal*  and update the system:
 
 .. code:: console
 
-    $ sudo apt update &&    $ sudo apt full-upgrade -y
+    sudo apt update && sudo apt full-upgrade -y
 
 
 Update Python references
@@ -60,7 +60,7 @@ Most *Linux* distributions still have *Python2* implemented as base interpreter 
 
 .. code:: console
 
-   $ ls /usr/bin/python*
+   ls /usr/bin/python*
 
 
     /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.8  /usr/bin/python3.8m  /usr/bin/python3m
@@ -69,8 +69,8 @@ In this example, *Python2.7* and *Python3.8* are installed. To overwrite *Python
 
 .. code:: console
 
-   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
-   $ alias python=python3
+   sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
+   alias python=python3
 
 
 PIP3 and additional libraries for geospatial analysis
@@ -80,56 +80,28 @@ Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://h
 
 .. code:: console
 
-   $ sudo apt install python3-pip
-   $ sudo apt-get install python3-tk
-   $ sudo apt install tk8.6-dev
-   $ sudo apt install libgeos-dev
+   sudo apt install python3-pip
+   sudo apt-get install python3-tk
+   sudo apt install tk8.6-dev
+   sudo apt install libgeos-dev
 
 Then install *QGIS* and ``GDAL`` for *Linux* (this should work for any *Debian* architecture):
 
 .. code:: console
 
-   $ sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
-   $ sudo apt-get update
-   $ sudo apt-get install gdal-bin
-   $ sudo apt-get install libgdal-dev
-   $ export CPLUS_INCLUDE_PATH=/usr/include/gdal
-   $ export C_INCLUDE_PATH=/usr/include/gdal
-   $ pip3 install GDAL==3.1.4
+   sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+   sudo apt-get update
+   sudo apt-get install gdal-bin
+   sudo apt-get install libgdal-dev
+   export CPLUS_INCLUDE_PATH=/usr/include/gdal
+   export C_INCLUDE_PATH=/usr/include/gdal
+   pip3 install GDAL
 
 .. note::
 
    Check on the latest GDAL release on the `developers website <https://gdal.org/download.html#current-releases>`_.
 
 More guidance for installing GDAL (also on other platforms) is available at `gdal.org <https://gdal.org/download.html>`_.
-
-Python libraries for hylas
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Use the *requirements* file from this repository and copy it to the project folder. In *Terminal* type:
-
-.. code:: console
-
-   $ pip3 install -r requirements.txt
-
-Clean up obsolete update remainders:
-
-.. code:: console
-
-   $ sudo apt-get clean
-   $ sudo apt-get autoclean
-   $ sudo apt-get autoremove
-   $ sudo apt-get autoremove --purge
-
-Upgrade Python libraries
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-In *Terminal* ``cd`` to the local *hylas* repository and update (upgrade) required Python packages:
-
-.. code:: console
-
-   $ pip3 freeze requirements.txt
-   $ pip3 install -r requirements.txt --upgrade
 
 Install an IDE (*PyCharm*)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -141,8 +113,8 @@ Install *PyCharm* with snap (requires snap):
 
 .. code:: console
 
-   $ sudo apt install snapd
-   $ sudo snap install pycharm-community --classic
+   sudo apt install snapd
+   sudo snap install pycharm-community --classic
 
 
 WINDOWS
@@ -162,28 +134,28 @@ Then open *Anaconda Prompt* and create a new environment (e.g., ``ipy-hylas``):
 
 .. code:: console
 
-   $ conda env create --name ipy-hylas python=3.8
+   conda env create --name ipy-hylas python=3.8
 
 Then, activate the new environment:
 
 .. code:: console
 
-   $ conda activate ipy-hylas
+   conda activate ipy-hylas
 
 Install the required Python libraries in the new environment:
 
 .. code:: console
 
-   $ conda update conda
-   $ conda install -c anaconda numpy
-   $ conda install -c anaconda pandas
-   $ conda install -c conda-forge gdal
-   $ conda install -c conda-forge shapely
-   $ conda install -c conda-forge alphashape
-   $ conda install -c conda-forge rasterstats
-   $ conda install -c anaconda scikit-image
-   $ conda install -c conda-forge geopandas
-   $ conda install -c conda-forge laspy
+   conda update conda
+   conda install -c anaconda numpy
+   conda install -c anaconda pandas
+   conda install -c conda-forge gdal
+   conda install -c conda-forge shapely
+   conda install -c conda-forge alphashape
+   conda install -c conda-forge rasterstats
+   conda install -c anaconda scikit-image
+   conda install -c conda-forge geopandas
+   conda install -c conda-forge laspy
 
 
 There are more compact ways to setup the conda environment (e.g., using an environment file). To read more about conda environments go to `hydro-informatics.github.io <https://hydro-informatics.github.io/hypy_install.html#conda-env>`_.
@@ -206,18 +178,37 @@ Open *Terminal* (or *Anaconda Prompt*), create a project folder, and ``cd`` to t
 
 .. code:: console
 
-   $ mkdir hylas-project
-   $ cd hylas-project
+   mkdir hylas-project
+   cd hylas-project
 
 Clone the *hylas* repository in the new folder:
 
 .. code:: console
 
-   $ git clone https://github.com/sschwindt/lidar-analysis.git
+   git clone https://github.com/sschwindt/lidar-analysis.git
 
 .. note::
    Cloning the repository creates a new sub-folder. So if you want to work directly in your home folder, skip the ``mkdir`` + ``cd`` commands.
 
+.. admonition:: LINUX / PIP3 USERS
+
+   In *Terminal* ``cd`` to the local *hylas* repository to install and update (upgrade) required Python packages:
+
+   .. code:: console
+
+      pip3 install -r requirements.txt
+      pip3 install -r requirements.txt --upgrade
+
+   Clean up obsolete update remainders:
+
+   .. code:: console
+
+      sudo apt-get clean
+      sudo apt-get autoclean
+      sudo apt-get autoremove
+      sudo apt-get autoremove --purge
+
+   Windows / conda users can skip the installation of requirements, because those were already installed in the *conda* environment.
 
 Setup *PyCharm* IDE
 ^^^^^^^^^^^^^^^^^^^
@@ -483,14 +474,14 @@ For local builds of the documentation, the following packages are required:
 
 .. code:: console
 
-   $ sudo apt-get install build-essential
-   $ sudo apt-get install python-dev python-pip python-setuptools
-   $ sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
-   $ apt-cache search libffi
-   $ sudo apt-get install -y libffi-dev
-   $ sudo apt-get install python3-dev default-libmysqlclient-dev
-   $ sudo apt-get install python3-dev
-   $ sudo apt-get install redis-server
+   sudo apt-get install build-essential
+   sudo apt-get install python-dev python-pip python-setuptools
+   sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+   apt-cache search libffi
+   sudo apt-get install -y libffi-dev
+   sudo apt-get install python3-dev default-libmysqlclient-dev
+   sudo apt-get install python3-dev
+   sudo apt-get install redis-server
 
 To generate a local html version of the ``hylas`` documentation, ``cd`` into the  ``docs`` directory  and type:
 
