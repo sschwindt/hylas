@@ -55,7 +55,7 @@ class LasPoint:
         Keyword Args:
             src_shp_file_name (str): Name of a shapefile from which elevation information is to be extracted (default: name of the las-point shapefile)
             elevation_field_name (str): Name of the field from which elevation data is to be extracted (default: ``"elevation"``)
-            interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
+            interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``False``)
             radius1 (float): Define the x-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
             radius2 (float): Define the y-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
             power (float): Power of the function for interpolating pixel values (default: ``1.0``, corresponding to linear).
@@ -73,7 +73,7 @@ class LasPoint:
 
         default_keys = {"src_shp_file_name": self.shapefile_name,
                         "elevation_field_name": "Elevation",
-                        "interpolate_gap_pixels": True,
+                        "interpolate_gap_pixels": False,
                         "radius1": -1,
                         "radius2": -1,
                         "power": 1.0,
