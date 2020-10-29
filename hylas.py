@@ -40,6 +40,12 @@ def process_file(source_file_name, epsg, **opts):
         shapefile_name (str): Name of the point shapefile to produce with las2*
         tif_prefix (str): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
         interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
+        radius1 (float): Define the x-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+        radius2 (float): Define the y-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+        power (float): Power of the function for interpolating pixel values (default: ``1.0``, corresponding to linear).
+        smoothing (float): Smoothing parameter for interpolating pixel values (default: ``0.0``).
+        min_points (int): Minimum number of points to use for interpolation. If the interpolator cannot find at least ``min_points`` for a pixel, it assigns a ``no_data`` value to that pixel  (default: ``0``).
+        max_points (int): Maximum number of points to use for interpolation. The interpolator will not use more than ``max_points`` closest points to interpolate a pixel value (default: ``0``).
 
     Returns:
         bool: ``True`` if successful, ``False`` otherwise
@@ -53,6 +59,12 @@ def process_file(source_file_name, epsg, **opts):
                     "overwrite": True,
                     "create_dem": False,
                     "pixel_size": 1.0,
+                    "radius1": -1,
+                    "radius2": -1,
+                    "power": 1.0,
+                    "smoothing": 0.0,
+                    "min_points": 0,
+                    "max_points": 0,
                     }
 
     for k in default_keys.keys():
@@ -72,7 +84,14 @@ def process_file(source_file_name, epsg, **opts):
         las_object.create_dem(target_file_name=default_keys["tif_prefix"] + "_dem.tif",
                               src_shp_file_name=default_keys["shapefile_name"],
                               pixel_size=default_keys["pixel_size"],
-                              interpolate_gap_pixels=default_keys["interpolate_gap_pixels"])
+                              interpolate_gap_pixels=default_keys["interpolate_gap_pixels"],
+                              power=default_keys["power"],
+                              radius1=default_keys["radius1"],
+                              radius2=default_keys["radius2"],
+                              smoothing=default_keys["smoothing"],
+                              min_points=default_keys["min_points"],
+                              max_points=default_keys["max_points"]
+                              )
 
     if "2tif" in "".join(default_keys["methods"]):
         logging.info(" * Creating GeoTIFFs ...")

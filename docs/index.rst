@@ -36,10 +36,10 @@ LINUX (Debian/Ubuntu)
 Optional: Use a Virtual Machine (VM)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `OSGeoLive <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similar, as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of a *Debian Linux* *ISO*. After the main installation, make sure to:
+Either download a net-installer *ISO* of `Debian Linux <https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/>`_  or `Ubuntu <https://ubuntu.com/download>`_, or use the `OSGeoLive <http://live.osgeo.org/en/download.html>`_, and install one of theses images as a Virtual Machine (VM). To get started with VMs read the introduction to VMs on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#about>`_. Installing the *OSGeoLive* VM works similar, as described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html#create-a-vm-with-virtualbox>`_, but use the *OSGeoLive* image in lieu of the *Debian Linux* *ISO*. After installing *Linux* as a VM, make sure to:
 
-* `Install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*
-* `Enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image)
+* `Install Guest Additions <https://hydro-informatics.github.io/vm.html#setup-debian>`_ for *Linux* VMs in *VirtualBox*.
+* `Enable folder sharing <https://hydro-informatics.github.io/vm.html#share>`_ between the host and guest (*Debian*, *Ubuntu*, or *OSGeoLive* image).
 
 Other system setups described on `hydro-informatics.github.io <https://hydro-informatics.github.io/vm.html>`_ (e.g., *Wine*) are not required in the following.
 
@@ -56,15 +56,16 @@ Open *Terminal*  and update the system:
 Update Python references
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Most *Linux* distributions still have *Python2* implemented as base interpreter to be used when ``python`` is called in *Terminal*. However, *Python2* usage is deprecated, and therefore, we want to make sure to robustly use *Python3* for running any *Python* script. Check out the installed *Python3* versions:
+
 .. code:: console
 
    $ ls /usr/bin/python*
 
 
-    /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.6  /usr/bin/python3.6m  /usr/bin/python3m
+    /usr/bin/python  /usr/bin/python2  /usr/bin/python2.7  /usr/bin/python3  /usr/bin/python3.8  /usr/bin/python3.8m  /usr/bin/python3m
 
-
-Now set the ``python`` environment variable so that it points at *Python3*:
+In this example, *Python2.7* and *Python3.8* are installed. To overwrite *Python2* usage, set the ``python`` environment variable so that it points at *Python3*:
 
 .. code:: console
 
@@ -83,6 +84,11 @@ Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://h
    $ sudo apt-get install python3-tk
    $ sudo apt install tk8.6-dev
    $ sudo apt install libgeos-dev
+
+Then install *QGIS* and ``GDAL`` for *Linux* (this should work for any *Debian* architecture):
+
+.. code:: console
+
    $ sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
    $ sudo apt-get update
    $ sudo apt-get install gdal-bin
@@ -93,7 +99,9 @@ Make sure that `PyGeos <https://pygeos.readthedocs.io>`_ and `tkinter <https://h
 
 .. note::
 
-   To leverage the full functionality of *hylas*, GDAL version 3.2 is required (to be released).
+   Check on the latest GDAL release on the `developers website <https://gdal.org/download.html#current-releases>`_.
+
+More guidance for installing GDAL (also on other platforms) is available at `gdal.org <https://gdal.org/download.html>`_.
 
 Python libraries for hylas
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -294,7 +302,7 @@ The file ``ROOT/test.py`` provides and example for using ``hylas`` with a las-fi
 Geo-utils
 ---------
 
-The ``geo_utils`` package is forked from `hydro-informatics <https://github.com/hydro-informatics/geo-utils>`_ on *GitHub*. ``geo_utils`` provides routines for creating, modifying, and transforming geo-spatial datasets. A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_."""
+The implemented ``geo_utils`` package is forked from `hydro-informatics <https://github.com/hydro-informatics/geo-utils>`_ on *GitHub*. ``geo_utils`` provides routines for creating, modifying, and transforming geo-spatial datasets. A detailed documentation of ``geo_utils`` is available at `geo-utils.readthedocs.io <https://geo-utils.readthedocs.io>`_."""
 
 
 to enable creating correctly geo-referenced GeoTIFF rasters (``rasterize`` function - see :ref:`geo-utils-code`).
@@ -311,14 +319,16 @@ The main file: hylas.py
    :members:
    :private-members:
 
-.. admonition:: ``process_file(source_file_name, epsg, **opts)``
+.. topic:: ``process_file(source_file_name, epsg, **opts)``
 
-   Loads a las-file and convert it to another geospatial file format (keyword arguments ``**opts``). Note that this function documentation is currently manually implemented because of *Sphinx* having troubles to look behind decorators.
+   Loads a las-file and convert it to another geospatial file format (keyword arguments ``**opts``).
+
+   Note that this function documentation is currently manually implemented because of *Sphinx* having troubles to look behind decorators.
 
 Arguments:
       * **source_file_name** (``str``): Full directory of the source file to use with methods
-         * if ``method="las2*"`` > provide a las-file name
-         * if ``method="shp2*"`` > provide a shapefile name
+         * if ``method="las2*"``: provide a las-file name
+         * if ``method="shp2*"``: provide a shapefile name
       * **epsg** (``int``): Authority code to use (try ``hylas.lookup_epsg(las_file_name)`` to look up the epsg online).
 
 Keyword Arguments (``**opts``):
@@ -330,9 +340,21 @@ Keyword Arguments (``**opts``):
       * **shapefile_name** (``str``): Name of the point shapefile to produce with ``las2*``
       * **tif_prefix** (``str``): Prefix include folder path to use for GeoTiFFs (defined extract_attributes are appended to file name)
       * **interpolate_gap_pixels** (``bool``): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
+      * **radius1** (``float``): Define the x-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+      * **radius2** (``float``): Define the y-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+      * **power** (``float``): Power of the function for interpolating pixel values (default: ``1.0``, corresponding to linear).
+      * **smoothing** (``float``): Smoothing parameter for interpolating pixel values (default: ``0.0``).
+      * **min_points** (``int``): Minimum number of points to use for interpolation. If the interpolator cannot find at least ``min_points`` for a pixel, it assigns a ``no_data`` value to that pixel  (default: ``0``).
+      * **max_points** (``int``): Maximum number of points to use for interpolation. The interpolator will not use more than ``max_points`` closest points to interpolate a pixel value (default: ``0``).
 
 Returns:
       ``bool``: ``True`` if successful, ``False`` otherwise.
+
+More information on pixel value interpolation:
+* ``interpolate_gap_pixels=True`` interpolates values at pixels that are not touched by any las point.
+* The pixel value interpolation uses ``gdal_grid`` (i.e., its Python bindings through ``gdal.Grid()``).
+* Control the interpolation parameters with the keyword arguments ``radius1``, ``radius2``, ``power``, ``max_points``, ``min_points``,  and ``smoothing``.
+* All variables are illustratively explained on the `GDAL website <https://gdal.org/tutorials/gdal_grid_tut.html?highlight=grid>`_.
 
 
 Basic parameters: config.py

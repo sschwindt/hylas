@@ -152,13 +152,35 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
 
     Keyword Args:
         field_name (str): Name of the shapefile's field with values to burn to raster pixel values.
+        radius1 (float): Define the x-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+        radius2 (float): Define the y-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+        power (float): Power of the function for interpolating pixel values (default: ``1.0``, corresponding to linear).
+        smoothing (float): Smoothing parameter for interpolating pixel values (default: ``0.0``).
+        min_points (int): Minimum number of points to use for interpolation. If the interpolator cannot find at least ``min_points`` for a pixel, it assigns a ``no_data`` value to that pixel  (default: ``0``).
+        max_points (int): Maximum number of points to use for interpolation. The interpolator will not use more than ``max_points`` closest points to interpolate a pixel value (default: ``0``).
+
 
     Hints:
-        ``interpolate_gap_pixels=True`` only works with GDAL version 3.2 and newer.
+        More information on pixel value interpolation:
+        * ``interpolate_gap_pixels=True`` interpolates values at pixels that are not touched by any las point.
+        * The pixel value interpolation uses ``gdal_grid`` (i.e., its Python bindings through ``gdal.Grid()``).
+        * Control the interpolation parameters with the keyword arguments ``radius1``, ``radius2``, ``power``, ``max_points``, ``min_points``,  and ``smoothing``..
 
     Returns:
         int: Creates the GeoTIFF raster defined with ``out_raster_file_name`` (success: ``0``, otherwise ``None``).
     """
+
+    default_keys = {"radius1": -1,
+                    "radius2": -1,
+                    "power": 1.0,
+                    "smoothing": 0.0,
+                    "min_points": 0,
+                    "max_points": 0,
+                    }
+
+    for k in default_keys.keys():
+        if kwargs.get(k):
+            default_keys[k] = str(kwargs.get(k))
 
     # check if any action is required
     if os.path.isfile(out_raster_file_name) and not overwrite:
@@ -176,7 +198,7 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
     # read extent
     x_min, x_max, y_min, y_max = source_lyr.GetExtent()
 
-    # get x and y resolution
+    # get x and y resolution in number of pixel
     x_res = int((x_max - x_min) / pixel_size)
     y_res = int((y_max - y_min) / pixel_size)
 
@@ -188,44 +210,35 @@ def rasterize(in_shp_file_name, out_raster_file_name, pixel_size=10, no_data_val
         logging.error(e)
         return None
 
+    if float(pixel_size) < 1.0:
+        logging.info("   -- Yeek! This will be a high resolution raster. Be prepared that your system resources will be occupied for a while.")
+
     # use gdal.Grid if gap interpolation (fill void pixels) is True
     if interpolate_gap_pixels:
         logging.info(" * Creating gridded raster with interpolated values for empty pixels from neighbouring pixels ...")
         logging.info("   -- Note: to deactivate pixel value interpolation option use interpolate_gap_pixels=False")
+
         try:
-            rasterize_opts = ["a invdist:linear:radius1=-1:radius2=-1:smoothing=0.0",
-                              "of GTiff",
-                              "ot %s" % gdal_dtype_dict[int(rdtype)].strip("gdal.GDT_"),
-                              "txe {0} {1}".format(str(x_min), str(x_max)),
-                              "tye {0} {0}".format(str(y_min), str(y_max)),
-                              "tr {0} {1}".format(str(x_res), str(y_res)),
-                              "zfield '%s'" % str(kwargs.get("field_name")),
-                              "l {0} {1} {2}".format(str(source_lyr.GetName()), in_shp_file_name, out_raster_file_name)
-                              ]
-        except KeyError:
-            logging.error("! Invalid gdal_grid options defined.")
-            return None
-        try:
-            rasterize_cmd = "gdal_grid -" + " -".join(rasterize_opts)
-            #del source_ds  # avoid that the source is locked
-            subprocess.call(rasterize_cmd)
-            """
+            algorithm = "invdist:power={0}:radius1={1}:radius2={2}:smoothing={3}:min_points={4}:max_points={5}".format(
+                str(default_keys["power"]), str(default_keys["radius1"]), str(default_keys["radius2"]),
+                str(default_keys["smoothing"]), str(default_keys["min_points"]), str(default_keys["max_points"])
+            )
+
             gdal.Grid(out_raster_file_name, in_shp_file_name,
-                      algorithm="invdist:linear:radius1=-1:radius2=-1:smoothing=0.0",
+                      algorithm=algorithm,
                       zfield=kwargs.get("field_name"),
                       outputType=rdtype,
                       outputSRS=srs,
-                      tr=(pixel_size, pixel_size))
-            """
+                      width=x_res,
+                      height=y_res,
+                      outputBounds=[x_min, y_min, x_max, y_max])
             return 0
 
-        except RuntimeError:
-            try:
-                logging.info("   -- Could not run rasterzation with spatial resolution - retrying without pixel_size ...")
-                rasterize_cmd = str("gdal_grid -" + " -".join(rasterize_opts)).replace(" -tr {0} {1}".format(str(x_res), str(y_res)), "")
-                subprocess.call(rasterize_cmd)
-            except RuntimeError as new_err:
-                logging.error("! %s." % str(new_err))
+        except KeyError:
+            logging.error("! Invalid gdal.Grid options provided.")
+            return None
+        except RuntimeError as err:
+            logging.error("! %s." % str(err))
 
     # create destination data source (GeoTIff raster)
     try:

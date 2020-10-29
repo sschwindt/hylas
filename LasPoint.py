@@ -56,6 +56,12 @@ class LasPoint:
             src_shp_file_name (str): Name of a shapefile from which elevation information is to be extracted (default: name of the las-point shapefile)
             elevation_field_name (str): Name of the field from which elevation data is to be extracted (default: ``"elevation"``)
             interpolate_gap_pixels (bool): Fill empty pixels that are not touched by a shapefile point with interpolated values (default: ``True``)
+            radius1 (float): Define the x-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+            radius2 (float): Define the y-radius for interpolating pixels (default: ``-1``, corresponding to infinity). Only applicable ``with interpolate_gap_pixels``.
+            power (float): Power of the function for interpolating pixel values (default: ``1.0``, corresponding to linear).
+            smoothing (float): Smoothing parameter for interpolating pixel values (default: ``0.0``).
+            min_points (int): Minimum number of points to use for interpolation. If the interpolator cannot find at least ``min_points`` for a pixel, it assigns a ``no_data`` value to that pixel  (default: ``0``).
+            max_points (int): Maximum number of points to use for interpolation. The interpolator will not use more than ``max_points`` closest points to interpolate a pixel value (default: ``0``).
 
         Hint:
             This function works independently and does not require the prior creation of a shapefile.
@@ -68,6 +74,12 @@ class LasPoint:
         default_keys = {"src_shp_file_name": self.shapefile_name,
                         "elevation_field_name": "elevation",
                         "interpolate_gap_pixels": True,
+                        "radius1": -1,
+                        "radius2": -1,
+                        "power": 1.0,
+                        "smoothing": 0.0,
+                        "min_points": 0,
+                        "max_points": 0,
                         }
 
         for k in default_keys.keys():
@@ -84,7 +96,13 @@ class LasPoint:
 
         geo_utils.rasterize(default_keys["src_shp_file_name"], target_file_name, pixel_size=pixel_size,
                             field_name=default_keys["elevation_field_name"],
-                            interpolate_gap_pixels=default_keys["interpolate_gap_pixels"])
+                            interpolate_gap_pixels=default_keys["interpolate_gap_pixels"],
+                            power=default_keys["power"],
+                            radius1=default_keys["radius1"],
+                            radius2=default_keys["radius2"],
+                            smoothing=default_keys["smoothing"],
+                            min_points=default_keys["min_points"],
+                            max_points=default_keys["max_points"])
         logging.info("   -- Done.")
         return 0
 
