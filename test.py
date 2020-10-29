@@ -1,14 +1,14 @@
 import hylas
 import os
 
-#las_file_name = os.path.abspath("") + "/data/Inn_WWARosenheim_UTM32N_DHHN16_Klasse0_748000_5340000.las"
-las_file_name = os.path.abspath("") + "/data/sub_UTM32N_DHHN16_Klasse0_x.las"
-shp_file_name = os.path.abspath("") + "/data/sub.shp"
+las_file_name = os.path.abspath("") + "/data/Inn_WWARosenheim_UTM32N_DHHN16_Klasse0_748000_5340000.las"
+#las_file_name = os.path.abspath("") + "/data/sub_UTM32N_DHHN16_Klasse0_x.las"
+shp_file_name = os.path.abspath("") + "/data/ausleitung.shp"
 epsg = 25832
-methods = ["las2shp", "las2dem"]
+methods = ["las2shp", "las2dem", "las2tif"]
 attribs = "aci"
 px_size = 2
-tif_prefix = os.path.abspath("") + "/data/sub"
+tif_prefix = os.path.abspath("") + "/data/full"
 
 hylas.process_file(las_file_name,
                    epsg=epsg,

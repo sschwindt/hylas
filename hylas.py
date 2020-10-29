@@ -101,6 +101,7 @@ def process_file(source_file_name, epsg, **opts):
             logging.info("   -- Creating %s ..." % tif_name)
             geo_utils.rasterize(in_shp_file_name=default_keys["shapefile_name"],
                                 out_raster_file_name=tif_name,
+                                interpolate_gap_pixels=False,
                                 pixel_size=default_keys["pixel_size"],
                                 field_name=wattr[attr],
                                 overwrite=default_keys["overwrite"])

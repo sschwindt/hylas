@@ -59,7 +59,7 @@ def raster2line(raster_file_name, out_shp_fn, pixel_value):
 
     # extract pixels with the user-defined pixel value from the raster array
     trajectory = np.where(array == pixel_value)
-    if np.count_nonzero(trajectory) is 0:
+    if np.count_nonzero(trajectory) == 0:
         logging.error("! The defined pixel_value (%s) does not occur in the raster band." % str(pixel_value))
         return None
 
